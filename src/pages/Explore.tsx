@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -101,7 +100,7 @@ const ExplorePage = () => {
     savePlaceMutation.mutate(recommendation);
   };
   
-  const actualRecommendations: Recommendation[] | undefined = recommendationsData?.recommendations as Recommendation[] | undefined;
+  const actualRecommendations: Recommendation[] | undefined = recommendationsData?.recommendations as unknown as Recommendation[] | undefined;
   const displayRecommendations = actualRecommendations && actualRecommendations.length > 0 ? actualRecommendations : mockRecommendations;
 
   return (
