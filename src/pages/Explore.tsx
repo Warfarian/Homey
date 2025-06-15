@@ -18,9 +18,9 @@ const ExplorePage = () => {
                 .from('explore_recommendations')
                 .select('recommendations')
                 .eq('user_id', user.id)
-                .single();
+                .maybeSingle();
 
-            if (error && error.code !== 'PGRST116') { // PGRST116: no rows found
+            if (error) {
                 console.error("Error fetching recommendations", error);
                 throw new Error(error.message);
             }
