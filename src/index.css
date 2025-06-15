@@ -34,6 +34,9 @@
     --ring: 24.6 95% 53.1%;
 
     --radius: 0.5rem;
+
+    --cursor-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='8' stroke='%230a0a0a' stroke-width='1.5'/%3E%3C/svg%3E");
+    --cursor-pointer-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%230a0a0a'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E");
   }
 
   .dark {
@@ -64,6 +67,9 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 24.6 95% 53.1%;
+
+    --cursor-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Ccircle cx='12' cy='12' r='8' stroke='%23fafafa' stroke-width='1.5'/%3E%3C/svg%3E");
+    --cursor-pointer-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23fafafa'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3C/svg%3E");
   }
 }
 
@@ -74,10 +80,10 @@
 
   body {
     @apply bg-background text-foreground font-sans transition-colors duration-300;
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-mouse-pointer-2'%3E%3Cpath d='m4 4 7.07 17 2.51-7.39L21 11.07z'/%3E%3C/svg%3E") 4 4, auto;
+    cursor: var(--cursor-url) 12 12, auto;
   }
 
   a, button, [role="button"], input, textarea, select, .cursor-pointer, [onclick] {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='currentColor' stroke='currentColor' stroke-width='1' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-mouse-pointer-click'%3E%3Cpath d='m9 9 5 12 1.8-5.2L21 14Z'/%3E%3Cpath d='M7.2 2.2 8 9l-5.6 3.3Z'/%3E%3Cpath d='m2.6 12.4 2.8-6.9L8 9Z'/%3E%3C/svg%3E") 12 12, pointer;
+    cursor: var(--cursor-pointer-url) 12 12, pointer;
   }
 }

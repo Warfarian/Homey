@@ -16,6 +16,7 @@ export const Hero = () => {
       </div>
       
       <div className="max-w-4xl mx-auto">
+        <h2 className="font-sans text-2xl md:text-3xl font-bold uppercase tracking-widest text-primary mb-4">Homey</h2>
         <h1 className="font-serif text-5xl md:text-7xl font-bold text-foreground mb-4">
           Feel at home, faster.
         </h1>
