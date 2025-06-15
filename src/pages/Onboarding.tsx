@@ -43,16 +43,21 @@ const Onboarding = () => {
   const [initialStepDetermined, setInitialStepDetermined] = useState(false);
 
   useEffect(() => {
+    // This is the most important check. If profile is loaded and complete, always redirect.
+    if (profile?.onboarding_completed) {
+      console.log("Onboarding Page: Profile shows onboarding is complete. Redirecting to home.");
+      navigate('/');
+      return;
+    }
+
     if (isLoadingProfile || initialStepDetermined) {
       return;
     }
 
     if (profile) {
+      console.log("Onboarding Page: Determining initial step.");
       setInitialStepDetermined(true);
-      if (profile.onboarding_completed) {
-        navigate('/');
-        return;
-      }
+      // Onboarding is not complete, so figure out where to start.
       const isProfileComplete = !!(profile.full_name && profile.age && profile.gender);
       if (isProfileComplete) {
         setStep('takeout_upload');
@@ -60,6 +65,7 @@ const Onboarding = () => {
         setStep('profile');
       }
     } else if (user && !isLoadingProfile) {
+      console.log("Onboarding Page: User exists, but no profile. Starting with profile form.");
       setInitialStepDetermined(true);
       setStep('profile');
     }

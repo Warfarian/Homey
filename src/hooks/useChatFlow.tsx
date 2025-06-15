@@ -65,7 +65,20 @@ export const useChatFlow = () => {
             if (profileError) throw profileError;
         },
         onSuccess: () => {
+            console.log("useChatFlow: Preferences saved. Updating cache and UI.");
+
+            // Optimistically update the profile in the cache to reflect completion
+            queryClient.setQueryData(['profile', user?.id], (oldData: any) => {
+                if (oldData) {
+                    console.log("useChatFlow: Optimistically setting onboarding_completed to true in cache.");
+                    return { ...oldData, onboarding_completed: true };
+                }
+                return oldData;
+            });
+
+            // Also invalidate to refetch in the background for data consistency
             queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
+
             toast({
                 title: "Preferences saved!",
                 description: "We're now tailoring your experience.",
@@ -85,9 +98,7 @@ export const useChatFlow = () => {
             setCompletedSteps(prev => [...prev, question, answer]);
             setStep('complete');
 
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+            // NOTE: Navigation is now handled by the Onboarding.tsx page based on the profile's completion status.
         },
         onError: (error) => {
             console.error("Error saving onboarding data", error);
