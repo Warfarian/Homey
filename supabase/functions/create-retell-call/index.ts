@@ -1,4 +1,3 @@
-
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
@@ -14,12 +13,26 @@ serve(async (req) => {
 
   try {
     const { to_number } = await req.json();
+    console.log('Received request with phone number:', to_number);
+    
     if (!to_number) {
       return new Response(JSON.stringify({ error: 'Phone number (to_number) is required.' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
+
+    // Format phone number to E.164 format
+    let formattedNumber = to_number.replace(/\D/g, ''); // Remove all non-digits
+    if (formattedNumber.length === 10) {
+      formattedNumber = '+1' + formattedNumber; // Add US country code if missing
+    } else if (formattedNumber.length === 11 && formattedNumber.startsWith('1')) {
+      formattedNumber = '+' + formattedNumber; // Add + if missing
+    } else if (!formattedNumber.startsWith('+')) {
+      formattedNumber = '+' + formattedNumber; // Add + if missing
+    }
+    
+    console.log('Formatted phone number:', formattedNumber);
 
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
@@ -28,6 +41,7 @@ serve(async (req) => {
     )
 
     const { data: { user }, } = await supabaseClient.auth.getUser()
+    console.log('User authenticated:', !!user);
 
     if (!user) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
@@ -36,19 +50,27 @@ serve(async (req) => {
       })
     }
     
+    const retellApiKey = Deno.env.get('RETELL_API_KEY');
+    console.log('RETELL_API_KEY exists:', !!retellApiKey);
+    
+    if (!retellApiKey) {
+      throw new Error('RETELL_API_KEY not found in environment variables');
+    }
+    
     // IMPORTANT: Make sure this is your actual Retell Agent ID.
     const agentId = 'agent_b942750aee8fba37f10587192b';
+    console.log('Using agent ID:', agentId);
 
     const retellResponse = await fetch('https://api.retellai.com/create-call', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('RETELL_API_KEY')}`,
+        'Authorization': `Bearer ${retellApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         agent_id: agentId,
         from_number: '+15075193337', // Your Retell phone number
-        to_number: to_number, // User's phone number from the frontend
+        to_number: formattedNumber, // Use formatted number
         metadata: {
           user_id: user.id,
         },
@@ -57,6 +79,8 @@ serve(async (req) => {
         }
       }),
     })
+
+    console.log('Retell API response status:', retellResponse.status);
 
     if (!retellResponse.ok) {
       const errorBody = await retellResponse.text();

@@ -88,7 +88,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'deepseek-ai/DeepSeek-V3',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 16384,
+        max_tokens: 8192,
         temperature: 0.5,
         top_p: 0.95,
       }),
