@@ -104,7 +104,7 @@ export const ChatFlow = () => {
 
     const { mutate: getAiResponse } = useMutation({
         mutationFn: async (messages: { role: string; content: string }[]) => {
-            const { data, error } = await supabase.functions.invoke('nebius-chat-completion', {
+            const { data, error } = await supabase.functions.invoke('homey-chat-completion', {
                 body: { messages },
             });
             if (error) {
