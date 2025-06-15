@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, PhoneOutgoing } from 'lucide-react';
+import { Loader2, PhoneOutgoing, Play } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -77,9 +76,26 @@ export const VoiceOnboardingStep = ({ onSuccess }: VoiceOnboardingStepProps) => 
   return (
     <div className="w-full max-w-2xl text-center mx-auto">
       <h1 className="text-3xl font-bold font-serif mb-2">Let's talk!</h1>
-      <p className="text-xl text-muted-foreground mb-12">
+      <p className="text-xl text-muted-foreground mb-8">
         Enter your phone number below and we'll call you to personalize your recommendations.
       </p>
+      
+      {/* Demo Link */}
+      <div className="mb-8">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={() => window.open('https://drive.google.com/drive/folders/1SItf4KvZF2u9IC2X1zYWWSDfCOqIF3-9?usp=sharing', '_blank', 'noopener,noreferrer')}
+          className="mb-4"
+        >
+          <Play className="w-4 h-4 mr-2" />
+          Listen to Demo Call
+        </Button>
+        <p className="text-sm text-muted-foreground">
+          Hear what a conversation with Homey sounds like
+        </p>
+      </div>
+
       <div className="max-w-sm mx-auto space-y-4">
           <div className="text-left">
               <Label htmlFor="phone">Phone Number</Label>
