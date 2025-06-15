@@ -102,6 +102,11 @@ export default {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(25px)' },
         },
+        'gradient-pan': {
+          '0%': { 'background-position': '0% 50%' },
+          '50%': { 'background-position': '100% 50%' },
+          '100%': { 'background-position': '0% 50%' },
+        },
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
@@ -109,6 +114,7 @@ export default {
         'float-1': 'float-1 8s ease-in-out infinite',
         'float-2': 'float-2 10s ease-in-out infinite',
         'float-3': 'float-3 12s ease-in-out infinite',
+        'gradient-pan': 'gradient-pan 15s ease-in-out infinite',
 			}
 		}
 	},

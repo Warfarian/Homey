@@ -15,7 +15,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
+    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-r from-background via-secondary to-background bg-[length:200%_200%] animate-gradient-pan py-20 px-4">
       <FloatingIconsBackground />
       <div className="absolute top-4 right-4">
         <ThemeToggle />
