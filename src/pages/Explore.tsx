@@ -127,6 +127,9 @@ const ExplorePage = () => {
 
   const recommendations: Recommendation[] = (recommendationsData?.recommendations as Recommendation[]) || [];
 
+  // Debug: Log total recommendations count
+  console.log('Total recommendations:', recommendations.length);
+
   const categorizedRecommendations = useMemo(() => {
     if (!recommendations || recommendations.length === 0) return [];
     
@@ -138,6 +141,9 @@ const ExplorePage = () => {
       acc[category].push(rec);
       return acc;
     }, {} as Record<string, Recommendation[]>);
+
+    // Debug: Log the number of recommendations per category
+    console.log('Recommendations per category:', Object.entries(grouped).map(([cat, recs]) => `${cat}: ${recs.length}`));
 
     return Object.entries(grouped)
       .map(([category, recs]) => ({
