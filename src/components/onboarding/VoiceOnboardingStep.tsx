@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { Loader2, Mic, PhoneOff } from 'lucide-react';
-import { RetellClient } from 'retell-client-js-sdk';
+import { RetellWebClient } from 'retell-client-js-sdk';
 
 interface VoiceOnboardingStepProps {
   onSuccess: () => void;
 }
 
-const retellClient = new RetellClient();
+const retellClient = new RetellWebClient();
 
 export const VoiceOnboardingStep = ({ onSuccess }: VoiceOnboardingStepProps) => {
   const [isCalling, setIsCalling] = useState(false);
