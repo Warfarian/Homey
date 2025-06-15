@@ -6,18 +6,20 @@ import { Loader2, Bookmark } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { SavedPlaceCard, SavedPlace } from "@/components/dashboard/SavedPlaceCard";
 
 const DashboardPage = () => {
     const { user } = useAuth();
 
-    const { data: savedPlaces, isLoading } = useQuery({
+    const { data: savedPlaces, isLoading } = useQuery<SavedPlace[]>({
         queryKey: ['saved_places', user?.id],
         queryFn: async () => {
             if (!user) return [];
             const { data, error } = await supabase
                 .from('saved_places')
                 .select('*')
-                .eq('user_id', user.id);
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false });
 
             if (error) {
                 console.error("Error fetching saved places", error);
@@ -61,7 +63,13 @@ const DashboardPage = () => {
                     </Card>
                 )}
                 
-                {/* Placeholder for actual saved places */}
+                {!isLoading && savedPlaces && savedPlaces.length > 0 && (
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        {savedPlaces.map((place) => (
+                            <SavedPlaceCard key={place.id} place={place} />
+                        ))}
+                    </div>
+                )}
              </div>
         </section>
     );
