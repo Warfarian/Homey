@@ -1,26 +1,13 @@
-
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-import { Navigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Manifesto = () => {
   const { session, loading } = useAuth();
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-    });
-    if (error) {
-      toast({
-        title: "Login Error",
-        description: error.message,
-        variant: "destructive",
-      });
-      console.error("Login Error:", error);
-    }
+  const handleGetStarted = () => {
+    navigate('/auth');
   };
 
   if (loading) {
@@ -51,7 +38,7 @@ export const Manifesto = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 items-start flex-wrap">
             <Button 
-              onClick={handleLogin}
+              onClick={handleGetStarted}
               className="font-sans text-sm tracking-wider px-8 py-6 rounded-lg transition-all duration-300 transform hover:scale-105"
             >
               Get Started →
