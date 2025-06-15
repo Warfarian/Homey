@@ -11,13 +11,13 @@ export const Stories = () => {
       quote: "The coffee shop recommendation came with the perfect timing. It's become my morning ritual.",
       author: "Marcus Rivera", 
       location: "Relocated to Austin",
-      img: "1483058712412-4245e9b90334"
+      img: "1721322800607-8c38375eef04"
     },
     {
       quote: "It suggested a running path I never would have found. Now it's my favorite part of the day.",
       author: "Elena Kowalski",
       location: "Fresh in Portland",
-      img: "1487958449943-2429e8be8625"
+      img: "1523712999610-f77fbcfc3843"
     }
   ];
 

@@ -4,12 +4,17 @@ import { useState } from "react";
 import { AudioModal } from "@/components/modals/AudioModal";
 import { AtoBGraphic } from "@/components/AtoBGraphic";
 import { ArrowRight } from "lucide-react";
+import { ThemeToggle } from "../ThemeToggle";
 
 export const Hero = () => {
   const [showAudioModal, setShowAudioModal] = useState(false);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      
       <div className="max-w-4xl mx-auto">
         <h1 className="font-serif text-5xl md:text-7xl font-bold text-foreground mb-4">
           Feel at home, faster.

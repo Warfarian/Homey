@@ -23,7 +23,7 @@ export const AtoBGraphic = () => {
       {/* Point B */}
       <div className="relative flex flex-col items-center gap-2 text-primary">
         <Home className="w-12 h-12 md:w-16 md:h-16" />
-        <p className="font-sans text-xs md:text-sm">New Homey</p>
+        <p className="font-sans text-xs md:text-sm">Homey</p>
         <div className="absolute -top-3 -right-3 md:-top-4 md:-right-4 bg-primary text-primary-foreground rounded-full p-1.5 md:p-2 shadow-lg animate-bounce">
             <User className="w-5 h-5 md:w-6 md:h-6" />
         </div>
