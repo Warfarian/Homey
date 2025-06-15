@@ -6,6 +6,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { WelcomeStep } from './WelcomeStep';
 import { TransportStep } from './TransportStep';
 import { CategoriesStep } from './CategoriesStep';
+import { ValuesStep } from './ValuesStep';
+import { TagsStep } from './TagsStep';
+import { ReviewStep } from './ReviewStep';
 import { Loader2 } from 'lucide-react';
 import { ChatBubble } from './ChatBubble';
 import React from 'react';
@@ -91,6 +94,61 @@ export const ChatFlow = () => {
         setCompletedSteps(prev => [...prev, question, answer]);
         setStep('values');
     }
+
+    const handleValuesNext = (data: string[]) => {
+        setOnboardingData(prev => ({ ...prev, values: data }));
+        
+        const question = (
+            <ChatBubble key="values-q">
+                <p className="text-lg font-medium">What's most important to you about a place?</p>
+            </ChatBubble>
+        );
+        const answer = (
+             <div key="values-a" className="self-end bg-primary text-primary-foreground p-3 rounded-lg max-w-sm animate-in fade-in-0">
+                <p>{data.join(', ')}</p>
+            </div>
+        );
+
+        setCompletedSteps(prev => [...prev, question, answer]);
+        setStep('tags');
+    };
+
+    const handleTagsNext = (data: string[]) => {
+        setOnboardingData(prev => ({ ...prev, tags: data }));
+        
+        const question = (
+            <ChatBubble key="tags-q">
+                <p className="text-lg font-medium">Any specific keywords or tags for what you're looking for?</p>
+            </ChatBubble>
+        );
+        const answer = (
+             <div key="tags-a" className="self-end bg-primary text-primary-foreground p-3 rounded-lg max-w-sm animate-in fade-in-0">
+                <p>{data.join(', ')}</p>
+            </div>
+        );
+
+        setCompletedSteps(prev => [...prev, question, answer]);
+        setStep('review');
+    };
+    
+    const handleReviewNext = () => {
+        // In the next phase, we'll save this data to the database.
+        console.log("Final Onboarding Data:", onboardingData);
+
+        const question = (
+            <ChatBubble key="review-q">
+                 <p className="text-lg font-medium">Here’s what I’ve got. Does this look right?</p>
+            </ChatBubble>
+        );
+        const answer = (
+             <div key="review-a" className="self-end bg-primary text-primary-foreground p-3 rounded-lg max-w-sm animate-in fade-in-0">
+                <p>Looks good, finish!</p>
+            </div>
+        );
+
+        setCompletedSteps(prev => [...prev, question, answer]);
+        setStep('complete');
+    }
     
     if (isLoading) {
         return <div className="flex justify-center items-center h-32"><Loader2 className="animate-spin" /></div>
@@ -105,7 +163,13 @@ export const ChatFlow = () => {
             case 'categories':
                 return <CategoriesStep onNext={handleCategoriesNext} />;
             case 'values':
-                return <ChatBubble>Next up: What's important to you in a neighborhood or place?</ChatBubble>
+                return <ValuesStep onNext={handleValuesNext} />;
+            case 'tags':
+                return <TagsStep onNext={handleTagsNext} />;
+            case 'review':
+                return <ReviewStep data={onboardingData} onNext={handleReviewNext} />;
+            case 'complete':
+                 return <ChatBubble>All done! I'm now finding recommendations based on your preferences.</ChatBubble>;
             default:
                 return null;
         }
