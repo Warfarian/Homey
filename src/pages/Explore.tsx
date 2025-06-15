@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -201,13 +200,13 @@ const ExplorePage = () => {
                 <Carousel
                   opts={{
                     align: "start",
-                    loop: recs.length > 3,
+                    loop: recs.length > 5,
                   }}
                   className="w-full"
                 >
                   <CarouselContent className="-ml-4">
                     {recs.map((rec) => (
-                      <CarouselItem key={rec.place_id} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                      <CarouselItem key={rec.place_id} className="pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
                         <div className="p-1 h-full">
                            <RecommendationCard 
                               recommendation={rec} 
@@ -230,4 +229,3 @@ const ExplorePage = () => {
   );
 };
 export default ExplorePage;
-
