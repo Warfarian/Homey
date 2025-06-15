@@ -1,7 +1,7 @@
-
 import { ChatBubble } from './ChatBubble';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Loader2 } from 'lucide-react';
 
 interface ReviewStepProps {
     data: {
@@ -11,6 +11,7 @@ interface ReviewStepProps {
         tags?: string[];
     };
     onNext: () => void;
+    isLoading?: boolean;
 }
 
 const DataSection = ({ title, items }: { title: string, items?: string[] }) => {
@@ -23,7 +24,7 @@ const DataSection = ({ title, items }: { title: string, items?: string[] }) => {
     )
 }
 
-export const ReviewStep = ({ data, onNext }: ReviewStepProps) => {
+export const ReviewStep = ({ data, onNext, isLoading }: ReviewStepProps) => {
     return (
         <div className="flex flex-col items-start gap-6 w-full">
             <ChatBubble>
@@ -38,7 +39,10 @@ export const ReviewStep = ({ data, onNext }: ReviewStepProps) => {
                 </Card>
             </ChatBubble>
             <div className="self-end animate-in fade-in-0 slide-in-from-bottom-5 duration-700 delay-500 fill-mode-forwards">
-                 <Button onClick={onNext}>Looks good, finish!</Button>
+                 <Button onClick={onNext} disabled={isLoading}>
+                    {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                    Looks good, finish!
+                 </Button>
             </div>
         </div>
     );

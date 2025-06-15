@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -43,14 +44,18 @@ const Onboarding = () => {
   const isProfileComplete = profile && profile.full_name && profile.age && profile.gender;
 
   useEffect(() => {
-    if (!isLoadingProfile) {
+    if (!isLoadingProfile && profile) {
+      if (profile.onboarding_completed) {
+        navigate('/');
+        return;
+      }
       if (!isProfileComplete) {
         setStep('profile');
       } else {
         setStep('takeout_upload');
       }
     }
-  }, [isLoadingProfile, isProfileComplete]);
+  }, [isLoadingProfile, profile, navigate]);
 
   const handleProfileUpdateSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });

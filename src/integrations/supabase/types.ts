@@ -9,6 +9,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      onboarding_responses: {
+        Row: {
+          categories: string[] | null
+          created_at: string
+          id: string
+          tags: string[] | null
+          transport: string[] | null
+          updated_at: string
+          user_id: string
+          values: string[] | null
+        }
+        Insert: {
+          categories?: string[] | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          transport?: string[] | null
+          updated_at?: string
+          user_id: string
+          values?: string[] | null
+        }
+        Update: {
+          categories?: string[] | null
+          created_at?: string
+          id?: string
+          tags?: string[] | null
+          transport?: string[] | null
+          updated_at?: string
+          user_id?: string
+          values?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "onboarding_responses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           age: number | null
@@ -16,6 +57,7 @@ export type Database = {
           full_name: string | null
           gender: string | null
           id: string
+          onboarding_completed: boolean
           updated_at: string
         }
         Insert: {
@@ -24,6 +66,7 @@ export type Database = {
           full_name?: string | null
           gender?: string | null
           id: string
+          onboarding_completed?: boolean
           updated_at?: string
         }
         Update: {
@@ -32,6 +75,7 @@ export type Database = {
           full_name?: string | null
           gender?: string | null
           id?: string
+          onboarding_completed?: boolean
           updated_at?: string
         }
         Relationships: []

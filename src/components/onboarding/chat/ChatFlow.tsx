@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { WelcomeStep } from './WelcomeStep';
 import { TransportStep } from './TransportStep';
@@ -12,11 +12,16 @@ import { ReviewStep } from './ReviewStep';
 import { Loader2 } from 'lucide-react';
 import { ChatBubble } from './ChatBubble';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/components/ui/use-toast';
 
 type ChatOnboardingStep = 'welcome' | 'transport' | 'categories' | 'values' | 'tags' | 'review' | 'complete';
 
 export const ChatFlow = () => {
     const { user } = useAuth();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const { toast } = useToast();
     const [step, setStep] = useState<ChatOnboardingStep>('welcome');
     const [onboardingData, setOnboardingData] = useState<any>({});
     const [completedSteps, setCompletedSteps] = useState<React.ReactNode[]>([]);
@@ -37,6 +42,64 @@ export const ChatFlow = () => {
             return data;
         },
         enabled: !!user,
+    });
+
+    const saveOnboardingData = useMutation({
+        mutationFn: async (data: any) => {
+            if (!user) throw new Error("User not found");
+
+            const { error: responseError } = await supabase
+                .from('onboarding_responses')
+                .upsert({
+                    user_id: user.id,
+                    transport: data.transport,
+                    categories: data.categories,
+                    values: data.values,
+                    tags: data.tags,
+                }, { onConflict: 'user_id' });
+
+            if (responseError) throw responseError;
+
+            const { error: profileError } = await supabase
+                .from('profiles')
+                .update({ onboarding_completed: true })
+                .eq('id', user.id);
+            
+            if (profileError) throw profileError;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
+            toast({
+                title: "Preferences saved!",
+                description: "We're now tailoring your experience.",
+            });
+            
+            const question = (
+                <ChatBubble key="review-q">
+                     <p className="text-lg font-medium">Here’s what I’ve got. Does this look right?</p>
+                </ChatBubble>
+            );
+            const answer = (
+                 <div key="review-a" className="self-end bg-primary text-primary-foreground p-3 rounded-lg max-w-sm animate-in fade-in-0">
+                    <p>Looks good, finish!</p>
+                </div>
+            );
+    
+            setCompletedSteps(prev => [...prev, question, answer]);
+            setStep('complete');
+
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+        },
+        onError: (error) => {
+            console.error("Error saving onboarding data", error);
+            toast({
+                title: "Oh no!",
+                description: "Something went wrong while saving your preferences. Please try again.",
+                variant: "destructive"
+            });
+        }
     });
 
     const handleWelcomeNext = () => {
@@ -132,22 +195,7 @@ export const ChatFlow = () => {
     };
     
     const handleReviewNext = () => {
-        // In the next phase, we'll save this data to the database.
-        console.log("Final Onboarding Data:", onboardingData);
-
-        const question = (
-            <ChatBubble key="review-q">
-                 <p className="text-lg font-medium">Here’s what I’ve got. Does this look right?</p>
-            </ChatBubble>
-        );
-        const answer = (
-             <div key="review-a" className="self-end bg-primary text-primary-foreground p-3 rounded-lg max-w-sm animate-in fade-in-0">
-                <p>Looks good, finish!</p>
-            </div>
-        );
-
-        setCompletedSteps(prev => [...prev, question, answer]);
-        setStep('complete');
+        saveOnboardingData.mutate(onboardingData);
     }
     
     if (isLoading) {
@@ -167,9 +215,9 @@ export const ChatFlow = () => {
             case 'tags':
                 return <TagsStep onNext={handleTagsNext} />;
             case 'review':
-                return <ReviewStep data={onboardingData} onNext={handleReviewNext} />;
+                return <ReviewStep data={onboardingData} onNext={handleReviewNext} isLoading={saveOnboardingData.isPending} />;
             case 'complete':
-                 return <ChatBubble>All done! I'm now finding recommendations based on your preferences.</ChatBubble>;
+                 return <ChatBubble>All done! Taking you to your personalized dashboard now...</ChatBubble>;
             default:
                 return null;
         }
