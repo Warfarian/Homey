@@ -138,7 +138,7 @@ serve(async (req) => {
     console.log('Calling Retell API...');
     let retellResponse;
     try {
-      retellResponse = await fetch('https://api.retellai.com/v1/create-call', {
+      retellResponse = await fetch('https://api.retellai.com/v2/create-phone-call', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${retellApiKey}`,
