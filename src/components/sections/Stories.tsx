@@ -18,12 +18,6 @@ export const Stories = () => {
       author: "Elena Kowalski",
       location: "Fresh in Portland",
       img: "1487958449943-2429e8be8625"
-    },
-    {
-      quote: "Found a quiet park that feels like the one I left behind. It's my new reading spot.",
-      author: "Aisha Khan",
-      location: "Moved to Denver",
-      img: "1519904214042-e3f353e8a2a5"
     }
   ];
 
@@ -38,7 +32,7 @@ export const Stories = () => {
           </h2>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-3 gap-12">
           {stories.map((story, index) => (
             <div key={index} className="space-y-6 group">
               <div 

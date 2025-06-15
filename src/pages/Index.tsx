@@ -1,19 +1,21 @@
 
-import { Hero } from "@/components/sections/Hero";
+import { Manifesto } from "@/components/sections/Manifesto";
 import { Problem } from "@/components/sections/Problem";
 import { Process } from "@/components/sections/Process";
 import { Nest } from "@/components/sections/Nest";
-import { Stories } from "@/components/sections/Stories";
+import { UserTestimonials } from "@/components/sections/UserTestimonials";
 import { LaunchCTA } from "@/components/sections/LaunchCTA";
+import { Stories } from "@/components/sections/Stories";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      <Hero />
+      <Manifesto />
       <Problem />
       <Process />
       <Nest />
       <Stories />
+      <UserTestimonials />
       <LaunchCTA />
     </div>
   );
