@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -7,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { FormModal } from "@/components/modals/FormModal";
 import { VoiceModal } from "@/components/modals/VoiceModal";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bot, Mic, Upload, ArrowRight } from "lucide-react";
+import { Bot, Mic, ArrowRight } from "lucide-react";
+import { UploadDataCard } from "@/components/UploadDataCard";
 
 const Onboarding = () => {
   const { user } = useAuth();
@@ -53,18 +53,7 @@ const Onboarding = () => {
             </CardContent>
           </Card>
 
-          <Card className="flex flex-col">
-            <CardHeader>
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-lg"><Upload className="w-6 h-6 text-primary" /></div>
-                <CardTitle>Upload Data</CardTitle>
-              </div>
-              <CardDescription className="pt-2">Securely upload your Google Maps location history.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow flex items-end">
-              <Button variant="secondary" className="w-full" disabled>Coming Soon</Button>
-            </CardContent>
-          </Card>
+          <UploadDataCard />
         </div>
 
         <Button onClick={handleLogout} variant="outline" className="mt-12">Logout</Button>

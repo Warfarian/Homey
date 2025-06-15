@@ -47,7 +47,10 @@ const AuthForm = () => {
 
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword(values);
+    const { error } = await supabase.auth.signInWithPassword({
+      email: values.email,
+      password: values.password,
+    });
     if (error) {
       toast({ title: "Login Error", description: error.message, variant: "destructive" });
     } else {
