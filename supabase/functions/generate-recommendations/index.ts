@@ -1,3 +1,4 @@
+
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import 'https://deno.land/x/xhr@0.1.0/mod.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
@@ -40,7 +41,7 @@ serve(async (req) => {
     }
 
     const prompt = `
-      Based on the following user preferences, generate a list of 3 tailored place recommendations in San Francisco, CA for EACH of the following categories: ${ALL_CATEGORIES.join(', ')}.
+      Based on the following user preferences, generate a list of 15 tailored place recommendations in San Francisco, CA for EACH of the following categories: ${ALL_CATEGORIES.join(', ')}.
       The user's preferences are:
       - Interests/Values: ${onboardingData.values?.join(', ') || 'Not specified'}
       - Preferred Categories: ${onboardingData.categories?.join(', ') || 'Not specified'}
