@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -10,6 +9,7 @@ import { ProfileForm } from "@/components/ProfileForm";
 import { TakeoutUploadStep } from "@/components/onboarding/TakeoutUploadStep";
 import { PathChoiceStep } from "@/components/onboarding/PathChoiceStep";
 import { useToast } from "@/components/ui/use-toast";
+import { ChatFlow } from "@/components/onboarding/chat/ChatFlow";
 
 type OnboardingStep = 'profile' | 'takeout_upload' | 'path_choice' | 'chat_flow';
 
@@ -86,12 +86,7 @@ const Onboarding = () => {
       case 'path_choice':
         return <PathChoiceStep onPathSelect={handlePathChoice} />;
       case 'chat_flow':
-        return (
-          <div className="text-center">
-            <h1 className="text-3xl font-bold font-serif">Chat Onboarding</h1>
-            <p className="text-muted-foreground">This is where the conversational onboarding flow will begin. I'll build this next!</p>
-          </div>
-        );
+        return <ChatFlow />;
       default:
         return null;
     }
