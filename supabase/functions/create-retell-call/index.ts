@@ -13,6 +13,14 @@ serve(async (req) => {
   }
 
   try {
+    const { to_number } = await req.json();
+    if (!to_number) {
+      return new Response(JSON.stringify({ error: 'Phone number (to_number) is required.' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_ANON_KEY') ?? '',
@@ -28,7 +36,7 @@ serve(async (req) => {
       })
     }
     
-    // IMPORTANT: Replace with your Retell Agent ID
+    // IMPORTANT: Make sure this is your actual Retell Agent ID.
     const agentId = 'agent_b942750aee8fba37f10587192b';
 
     const retellResponse = await fetch('https://api.retellai.com/create-call', {
@@ -39,8 +47,8 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         agent_id: agentId,
-        from_number: '+14157879899', // Placeholder number
-        to_number: '+14157879899', // Placeholder number for websocket calls
+        from_number: '+15075193337', // Your Retell phone number
+        to_number: to_number, // User's phone number from the frontend
         metadata: {
           user_id: user.id,
         },
@@ -53,7 +61,12 @@ serve(async (req) => {
     if (!retellResponse.ok) {
       const errorBody = await retellResponse.text();
       console.error('Retell API error:', errorBody);
-      throw new Error('Failed to create call with Retell AI');
+       try {
+        const parsedError = JSON.parse(errorBody);
+        throw new Error(parsedError.error || 'Failed to create call with Retell AI');
+      } catch {
+        throw new Error('Failed to create call with Retell AI. Check your Retell API key and Agent ID.');
+      }
     }
 
     const callData = await retellResponse.json();
