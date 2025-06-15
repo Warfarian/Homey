@@ -5,24 +5,132 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { FloatingIconsBackground } from "../FloatingIconsBackground";
 import { ThemeToggle } from "../ThemeToggle";
 import { AtoBGraphic } from "../AtoBGraphic";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { Loader2, ShoppingCart, HeartPulse, Dumbbell, Palette, GlassWater, Utensils, Trees, Coffee, Briefcase, Church } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React from "react";
+
+const categoryIcons: { [key: string]: React.ElementType } = {
+    'Grocery': ShoppingCart,
+    'Healthcare': HeartPulse,
+    'Fitness': Dumbbell,
+    'Arts & Culture': Palette,
+    'Nightlife': GlassWater,
+    'Restaurants': Utensils,
+    'Parks & Nature': Trees,
+    'Coffee Shops': Coffee,
+    'Co-working': Briefcase,
+    'Religious/Spiritual': Church,
+};
+
+const Dashboard = ({ profile }: { profile: { full_name: string, id: string } }) => {
+    const { data: onboardingData, isLoading } = useQuery({
+        queryKey: ['onboarding_responses', profile.id],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from('onboarding_responses')
+                .select('categories')
+                .eq('user_id', profile.id)
+                .single();
+
+            if (error) {
+                console.error("Error fetching onboarding responses", error);
+                return { categories: [] };
+            }
+            return data;
+        },
+        enabled: !!profile.id,
+    });
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-64">
+                <Loader2 className="animate-spin" />
+            </div>
+        );
+    }
+    
+    return (
+        <section className="min-h-screen w-full px-4 py-16 md:px-8 bg-background">
+            <div className="max-w-5xl mx-auto">
+                <div className="mb-12 text-center md:text-left">
+                    <h1 className="text-4xl font-bold font-serif mb-2">Welcome, {profile.full_name}.</h1>
+                    <p className="text-xl text-muted-foreground">Based on your preferences, here are categories to explore.</p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {onboardingData?.categories?.map((category) => {
+                        const Icon = categoryIcons[category] || Utensils;
+                        return (
+                            <Card key={category} className="hover:border-primary transition-colors">
+                                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                    <CardTitle className="text-base font-medium">{category}</CardTitle>
+                                    <Icon className="h-5 w-5 text-muted-foreground" />
+                                </CardHeader>
+                                <CardContent>
+                                    <p className="text-sm text-muted-foreground pt-2">Top place suggestions coming soon.</p>
+                                </CardContent>
+                            </Card>
+                        )
+                    })}
+                     {(!onboardingData?.categories || onboardingData.categories.length === 0) && (
+                        <Card className="sm:col-span-2 lg:col-span-3">
+                            <CardContent className="pt-6">
+                                <p className="text-muted-foreground">You didn't select any categories during onboarding. You can update your preferences in your profile settings.</p>
+                            </CardContent>
+                        </Card>
+                    )}
+                </div>
+            </div>
+        </section>
+    );
+}
 
 export const Manifesto = () => {
-  const { session, loading } = useAuth();
+  const { session, loading: authLoading, user } = useAuth();
   const navigate = useNavigate();
+
+  const { data: profile, isLoading: profileLoading } = useQuery({
+    queryKey: ['profile', user?.id],
+    queryFn: async () => {
+        if (!user) return null;
+        const { data, error } = await supabase
+            .from('profiles')
+            .select('id, full_name, onboarding_completed')
+            .eq('id', user.id)
+            .single();
+        if (error && error.code !== 'PGRST116') {
+            console.error("Error fetching profile", error);
+            throw new Error(error.message);
+        }
+        return data;
+    },
+    enabled: !!user,
+  });
+
 
   const handleGetStarted = () => {
     navigate('/auth');
   };
 
-  if (loading) {
+  if (authLoading || (session && profileLoading)) {
     return (
       <section className="min-h-screen flex items-center justify-center px-8 py-16">
-        <div>Loading...</div>
+        <Loader2 className="h-8 w-8 animate-spin" />
       </section>
     );
   }
 
-  if (session) {
+  if (session && profile) {
+    if (profile.onboarding_completed) {
+        return <Dashboard profile={profile} />;
+    } else {
+        return <Navigate to="/onboarding" replace />;
+    }
+  }
+
+  if (session && !profile && !profileLoading) {
     return <Navigate to="/onboarding" replace />;
   }
 
