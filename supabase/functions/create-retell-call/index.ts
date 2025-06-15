@@ -29,7 +29,7 @@ serve(async (req) => {
     }
     
     // IMPORTANT: Replace with your Retell Agent ID
-    const agentId = 'YOUR_RETELL_AGENT_ID';
+    const agentId = 'agent_b942750aee8fba37f10587192b';
 
     const retellResponse = await fetch('https://api.retellai.com/create-call', {
       method: 'POST',
