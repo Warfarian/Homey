@@ -31,25 +31,37 @@ const profileSchema = z.object({
   gender: z.string().min(1, { message: "Please select a gender." }),
 });
 
+type ProfileFormValues = z.infer<typeof profileSchema>;
+
 interface ProfileFormProps {
   onSuccess: () => void;
+  initialData?: Partial<ProfileFormValues>;
+  title?: string;
+  description?: string;
+  submitButtonText?: string;
 }
 
-export const ProfileForm = ({ onSuccess }: ProfileFormProps) => {
+export const ProfileForm = ({
+  onSuccess,
+  initialData = {},
+  title = "A Little About You",
+  description = "This helps us find places you'll love.",
+  submitButtonText = "Save and Continue",
+}: ProfileFormProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<z.infer<typeof profileSchema>>({
+  const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      full_name: "",
-      age: undefined,
-      gender: "",
+      full_name: initialData.full_name || "",
+      age: initialData.age,
+      gender: initialData.gender || "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof profileSchema>) => {
+  const onSubmit = async (values: ProfileFormValues) => {
     if (!user) {
       toast({ title: "Error", description: "You must be logged in.", variant: "destructive" });
       return;
@@ -72,7 +84,7 @@ export const ProfileForm = ({ onSuccess }: ProfileFormProps) => {
     if (error) {
       toast({ title: "Error updating profile", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Profile updated!", description: "Welcome to Homey!" });
+      toast({ title: "Profile updated!", description: "Your information has been saved." });
       onSuccess();
     }
   };
@@ -80,8 +92,8 @@ export const ProfileForm = ({ onSuccess }: ProfileFormProps) => {
   return (
     <Card className="w-full max-w-lg mx-auto animate-in fade-in-0 slide-in-from-bottom-10 duration-500">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold font-serif">A Little About You</CardTitle>
-        <CardDescription>This helps us find places you'll love.</CardDescription>
+        <CardTitle className="text-2xl font-bold font-serif">{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -137,7 +149,7 @@ export const ProfileForm = ({ onSuccess }: ProfileFormProps) => {
               )}
             />
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Saving..." : "Save and Continue"}
+              {isSubmitting ? "Saving..." : submitButtonText}
             </Button>
           </form>
         </Form>

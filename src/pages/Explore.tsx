@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -33,9 +34,12 @@ const ExplorePage = () => {
                 <div className="mb-12">
                     <h1 className="text-4xl font-bold font-serif mb-2">Explore</h1>
                     <p className="text-xl text-muted-foreground">Welcome to your Homey dashboard. These are the places we think you'll love.</p>
-                    <div className="mt-4">
+                    <div className="mt-4 flex flex-wrap gap-4">
                         <Button asChild variant="outline">
                             <Link to="/dashboard">View My Saved Places</Link>
+                        </Button>
+                        <Button asChild variant="outline">
+                            <Link to="/profile">My Profile</Link>
                         </Button>
                     </div>
                 </div>
