@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -25,6 +24,7 @@ export const ChatFlow = () => {
     const [step, setStep] = useState<ChatOnboardingStep>('welcome');
     const [onboardingData, setOnboardingData] = useState<any>({});
     const [completedSteps, setCompletedSteps] = useState<React.ReactNode[]>([]);
+    const [isAiThinking, setIsAiThinking] = useState(false);
 
     const { data: profile, isLoading } = useQuery({
         queryKey: ['profile', user?.id],
@@ -102,6 +102,40 @@ export const ChatFlow = () => {
         }
     });
 
+    const { mutate: getAiResponse } = useMutation({
+        mutationFn: async (messages: { role: string; content: string }[]) => {
+            const { data, error } = await supabase.functions.invoke('nebius-chat-completion', {
+                body: { messages },
+            });
+            if (error) {
+                throw error;
+            }
+            return data.completion;
+        },
+        onSuccess: (completion: string) => {
+            const aiResponseBubble = (
+                <ChatBubble key="ai-welcome-response">
+                    <p>{completion}</p>
+                </ChatBubble>
+            );
+            setCompletedSteps(prev => [...prev, aiResponseBubble]);
+            setStep('transport');
+        },
+        onError: (error) => {
+            console.error("Error getting AI response", error);
+            // Fallback: if AI fails, just move to the next step without AI message
+            toast({
+                title: "AI assistant hiccup!",
+                description: "Couldn't get a response, but we can continue without it.",
+                variant: "default",
+            });
+            setStep('transport');
+        },
+        onSettled: () => {
+            setIsAiThinking(false);
+        }
+    });
+
     const handleWelcomeNext = () => {
         const welcomeMessage = (
             <ChatBubble key="welcome-q">
@@ -119,7 +153,12 @@ export const ChatFlow = () => {
         );
 
         setCompletedSteps([welcomeMessage, welcomeAnswer]);
-        setStep('transport');
+        setIsAiThinking(true);
+        
+        getAiResponse([
+            { role: 'system', content: `You are Homey, a friendly and enthusiastic assistant helping a user named ${profile?.full_name || 'a new friend'} to find their new home. They just said they are ready to start. Your response should be short, one or two sentences. Express excitement and tell them you'll start with a few questions.` },
+            { role: 'user', content: "Let's go!" }
+        ]);
     };
 
     const handleTransportNext = (data: string[]) => {
@@ -203,6 +242,17 @@ export const ChatFlow = () => {
     }
 
     const renderCurrentStep = () => {
+        if (isAiThinking) {
+            return (
+                <ChatBubble>
+                    <div className="flex items-center gap-2">
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Thinking...</span>
+                    </div>
+                </ChatBubble>
+            );
+        }
+
         switch (step) {
             case 'welcome':
                 return <WelcomeStep name={profile?.full_name} onNext={handleWelcomeNext} />;
