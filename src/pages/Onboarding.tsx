@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -41,21 +40,28 @@ const Onboarding = () => {
 
   const [step, setStep] = useState<OnboardingStep>('profile');
 
-  const isProfileComplete = profile && profile.full_name && profile.age && profile.gender;
+  const isProfileComplete = !!(profile && profile.full_name && profile.age && profile.gender);
 
   useEffect(() => {
-    if (!isLoadingProfile && profile) {
+    if (isLoadingProfile) {
+      return;
+    }
+
+    if (profile) {
       if (profile.onboarding_completed) {
         navigate('/');
         return;
       }
-      if (!isProfileComplete) {
-        setStep('profile');
-      } else {
+      if (isProfileComplete) {
         setStep('takeout_upload');
+      } else {
+        setStep('profile');
       }
+    } else {
+      // No profile exists, stay on the profile creation step
+      setStep('profile');
     }
-  }, [isLoadingProfile, profile, navigate]);
+  }, [isLoadingProfile, profile, navigate, isProfileComplete]);
 
   const handleProfileUpdateSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
