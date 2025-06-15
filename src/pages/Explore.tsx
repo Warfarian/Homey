@@ -60,6 +60,27 @@ const ExplorePage = () => {
     enabled: !!user,
   });
 
+  const { data: savedPlaces } = useQuery({
+    queryKey: ['saved_places', user?.id],
+    queryFn: async () => {
+      if (!user) return [];
+      const { data, error } = await supabase
+        .from('saved_places')
+        .select('place_id')
+        .eq('user_id', user.id);
+      if (error) {
+        console.error("Error fetching saved places", error);
+        return [];
+      }
+      return data;
+    },
+    enabled: !!user,
+  });
+
+  const savedPlaceIds = useMemo(() => {
+    return new Set(savedPlaces?.map((p) => p.place_id));
+  }, [savedPlaces]);
+
   const generateNewRecommendationsMutation = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("User not authenticated");
@@ -125,15 +146,17 @@ const ExplorePage = () => {
     savePlaceMutation.mutate(recommendation);
   };
 
-  const recommendations: Recommendation[] = (recommendationsData?.recommendations as Recommendation[]) || [];
+  const allRecommendations: Recommendation[] = (recommendationsData?.recommendations as Recommendation[]) || [];
 
   // Debug: Log total recommendations count
-  console.log('Total recommendations:', recommendations.length);
+  console.log('Total recommendations from API:', allRecommendations.length);
 
   const categorizedRecommendations = useMemo(() => {
-    if (!recommendations || recommendations.length === 0) return [];
+    if (!allRecommendations || allRecommendations.length === 0) return [];
+
+    const unsavedRecommendations = allRecommendations.filter(rec => !savedPlaceIds.has(rec.place_id));
     
-    const grouped = recommendations.reduce((acc, rec) => {
+    const grouped = unsavedRecommendations.reduce((acc, rec) => {
       const category = rec.category || 'Uncategorized';
       if (!acc[category]) {
         acc[category] = [];
@@ -152,7 +175,7 @@ const ExplorePage = () => {
         maxScore: Math.max(...recs.map(r => r.match_score || 0)),
       }))
       .sort((a, b) => b.maxScore - a.maxScore);
-  }, [recommendations]);
+  }, [allRecommendations, savedPlaceIds]);
 
   const isLoading = isLoadingRecommendations || generateNewRecommendationsMutation.isPending;
 

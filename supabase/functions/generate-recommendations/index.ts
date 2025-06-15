@@ -1,4 +1,3 @@
-
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import 'https://deno.land/x/xhr@0.1.0/mod.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
@@ -40,9 +39,10 @@ serve(async (req) => {
       throw new Error(`Could not fetch onboarding data for user ${userId}: ${onboardingError?.message}`);
     }
 
-    const totalRecommendations = 15 * ALL_CATEGORIES.length;
+    const RECOMMENDATIONS_PER_CATEGORY = 8;
+    const totalRecommendations = RECOMMENDATIONS_PER_CATEGORY * ALL_CATEGORIES.length;
     const prompt = `
-      Based on the following user preferences, generate a list of 15 tailored place recommendations in San Francisco, CA for EACH of the following categories: ${ALL_CATEGORIES.join(', ')}.
+      Based on the following user preferences, generate a list of exactly ${RECOMMENDATIONS_PER_CATEGORY} tailored place recommendations in San Francisco, CA for EACH of the following categories: ${ALL_CATEGORIES.join(', ')}.
       This should result in a total of ${totalRecommendations} recommendations in the final JSON array.
       The user's preferences are:
       - Interests/Values: ${onboardingData.values?.join(', ') || 'Not specified'}
