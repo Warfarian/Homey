@@ -201,12 +201,13 @@ const ExplorePage = () => {
                   opts={{
                     align: "start",
                     loop: recs.length > 3,
+                    slidesToScroll: 1,
                   }}
                   className="w-full"
                 >
-                  <CarouselContent className="-ml-4">
+                  <CarouselContent className="-ml-2 md:-ml-4">
                     {recs.map((rec) => (
-                      <CarouselItem key={rec.place_id} className="pl-4 basis-full sm:basis-1/2 md:basis-1/3">
+                      <CarouselItem key={rec.place_id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                         <div className="p-1 h-full">
                            <RecommendationCard 
                               recommendation={rec} 
@@ -217,8 +218,8 @@ const ExplorePage = () => {
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
+                  <CarouselPrevious className="hidden sm:flex" />
+                  <CarouselNext className="hidden sm:flex" />
                 </Carousel>
               </div>
             ))}
