@@ -119,6 +119,7 @@ export type Database = {
         Row: {
           category: string
           created_at: string
+          google_maps_link: string | null
           id: string
           location: string | null
           match_reason: string | null
@@ -131,6 +132,7 @@ export type Database = {
         Insert: {
           category: string
           created_at?: string
+          google_maps_link?: string | null
           id?: string
           location?: string | null
           match_reason?: string | null
@@ -143,6 +145,7 @@ export type Database = {
         Update: {
           category?: string
           created_at?: string
+          google_maps_link?: string | null
           id?: string
           location?: string | null
           match_reason?: string | null
