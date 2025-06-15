@@ -1,11 +1,12 @@
 
 export const Problem = () => {
   const questions = [
-    "Where will I get a haircut?",
-    "Which café will become mine?",
-    "Where do I run at 7AM?",
-    "Who's my new dentist?",
-    "Which grocery store feels right?"
+    "Where's my new go-to coffee spot?",
+    "Found a good barber yet?",
+    "Where can I go for a 7AM run?",
+    "Is there a grocery store that just *gets* me?",
+    "Who's going to be my new dentist?",
+    "Any quiet spots to read a book?"
   ];
 
   return (
@@ -14,23 +15,21 @@ export const Problem = () => {
         <div className="grid lg:grid-cols-3 gap-16">
           <div className="lg:col-span-1">
             <h2 className="text-4xl font-black mb-8 font-sans">
-              THE PROBLEM
+              FEELING A LITTLE... LOST?
             </h2>
             <div className="bg-black text-white p-6 font-mono text-sm">
               <p>
-                "Moving is among the top 5 most stressful events — ahead of 
-                divorce, job loss, or illness."
+                "The stress of moving isn't about finding A dentist. It's about finding YOUR dentist. The one that fits your vibe and doesn't play smooth jazz."
               </p>
               <p className="mt-4 text-gray-300">
-                — American Psychological Association
+                — Someone who's been there
               </p>
             </div>
           </div>
           
           <div className="lg:col-span-2 space-y-8">
             <p className="text-xl font-mono mb-12 leading-relaxed">
-              The stress isn't about finding A dentist. It's about finding YOUR dentist. 
-              The one that fits your Tuesday 3PM schedule and doesn't play jazz.
+              You've handled the big stuff. The boxes are unpacked. But now comes the hard part: rebuilding your routine. It's the small, daily moments that make a place feel like home.
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">

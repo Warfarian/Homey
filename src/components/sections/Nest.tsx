@@ -1,7 +1,7 @@
 
 export const Nest = () => {
   const nestItems = [
-    { category: "MORNING_COFFEE", equivalent: "Equivalent of Bluebottle (Oakland) → Radio Coffee (Austin)" },
+    { category: "MORNING_COFFEE", equivalent: "Equivalent of Blue Bottle (Oakland) → Radio Coffee (Austin)" },
     { category: "WEEKEND_GROCERIES", equivalent: "Equivalent of Whole Foods (SOMA) → Central Market (North)" },
     { category: "RUNNING_ROUTE", equivalent: "Equivalent of Golden Gate Park → Lady Bird Lake Trail" },
     { category: "HAIRCUT", equivalent: "Equivalent of Fellow Barber → Finley's Barber Shop" },
@@ -14,17 +14,16 @@ export const Nest = () => {
         <div className="grid lg:grid-cols-2 gap-16">
           <div>
             <h2 className="text-4xl font-black mb-8 font-sans">
-              WHAT'S IN A NEST
+              WHAT'S IN A NEST?
             </h2>
             <p className="text-lg font-mono mb-8 leading-relaxed">
-              Your new city's equivalent of the places that made your old city feel like home.
+              Think of it as a starter pack for your new life, filled with places that feel like they're already yours.
             </p>
             
             <div className="bg-black text-white p-6">
-              <p className="font-mono text-sm mb-4">[ALGORITHM_OUTPUT]</p>
+              <p className="font-mono text-sm mb-4">[HOW WE FIND YOUR SPOTS]</p>
               <p className="font-mono text-sm">
-                Pattern matching based on: visit frequency, time of day, 
-                duration of stay, seasonal behavior, co-location with other activities.
+                Homey listens to your story and understands what you loved about your old haunts—the vibe, the time of day you'd go, even the music. Then it finds the closest match in your new city.
               </p>
             </div>
           </div>
@@ -46,10 +45,10 @@ export const Nest = () => {
         <div className="mt-16 text-center">
           <div className="inline-block bg-white border-2 border-black p-8">
             <p className="font-mono text-lg">
-              YOUR NEST = BEHAVIORAL CONTINUITY
+              YOUR NEST = A SENSE OF BELONGING
             </p>
             <p className="font-mono text-sm text-gray-600 mt-2">
-              Not just places. Patterns.
+              Less searching, more living.
             </p>
           </div>
         </div>

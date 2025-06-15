@@ -28,10 +28,10 @@ export const LaunchCTA = () => {
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-16">
           <h2 className="text-6xl md:text-7xl font-black mb-8 font-sans tracking-tighter">
-            YOU'VE MOVED.
+            READY TO FEEL
           </h2>
           <h2 className="text-6xl md:text-7xl font-black mb-12 font-sans tracking-tighter">
-            NOW SETTLE.
+            AT HOME?
           </h2>
         </div>
         

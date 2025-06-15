@@ -99,5 +99,12 @@
 
   body {
     @apply bg-background text-foreground;
+    /* Custom cursor for a playful, friendly feel */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' %3E%3Ccircle cx='12' cy='12' r='10' /%3E%3C/svg%3E") 12 12, auto;
+  }
+
+  a, button, [role="button"], input, textarea, select, .cursor-pointer, [onclick] {
+    /* Different cursor for interactive elements to show they are clickable */
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='black' %3E%3Ccircle cx='12' cy='12' r='6' /%3E%3C/svg%3E") 12 12, pointer;
   }
 }

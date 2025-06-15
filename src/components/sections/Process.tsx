@@ -1,11 +1,10 @@
 
 export const Process = () => {
   const steps = [
-    { id: "01", title: "USER MOVES", detail: "Relocation event occurs" },
-    { id: "02", title: "HOMEY ONBOARDS", detail: "Via conversation + preferences" },
-    { id: "03", title: "ANALYZES MAPS HISTORY", detail: "Pattern recognition from past behavior" },
-    { id: "04", title: "RECOMMENDS YOUR NEST", detail: "Curated local equivalents" },
-    { id: "05", title: "YOU LIVE, NOT SEARCH", detail: "Behavioral continuity restored" }
+    { id: "01", title: "YOU TELL HOMEY YOUR STORY", detail: "Through a quick chat or a simple form." },
+    { id: "02", title: "IT LEARNS YOUR VIBE", detail: "Connects the dots from your old favorite places." },
+    { id: "03", title: "FINDS YOUR NEW SPOTS", detail: "Creates a 'Nest' of personalized recommendations." },
+    { id: "04", title: "YOU START LIVING, NOT SEARCHING", detail: "Settle in faster and feel at home sooner." },
   ];
 
   return (
@@ -37,24 +36,22 @@ export const Process = () => {
         </div>
         
         <div className="mt-16 bg-gray-100 p-8">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h4 className="font-mono font-bold mb-4">[AUDIO_SAMPLE]</h4>
+              <h4 className="font-mono font-bold mb-4">[A PEEK AT THE MAGIC]</h4>
               <div className="bg-white p-4 border-2 border-black">
                 <p className="font-mono text-sm">
-                  "Hi, it's Homey. I found three coffee shops that match your 
-                  morning routine. The first one opens at 6:30 and has that 
-                  quiet corner table you like..."
+                  "Hey, it's Homey. I noticed you loved that quiet bookstore back in Seattle. I found a spot here called 'South Congress Books' that has a similar feel—lots of natural light and a great poetry section. Think you'll like it."
                 </p>
               </div>
             </div>
             <div>
-              <h4 className="font-mono font-bold mb-4">[INTERFACE_PREVIEW]</h4>
-              <div className="bg-black text-green-400 p-4 font-mono text-sm">
-                <p>$ homey --location="austin, tx"</p>
-                <p>$ analyzing behavioral patterns...</p>
-                <p>$ generating local matches...</p>
-                <p>$ nest created ✓</p>
+              <h4 className="font-mono font-bold mb-4">[YOUR NEW MAP]</h4>
+              <div className="bg-black text-white p-4 font-mono text-sm leading-relaxed">
+                <p className="text-green-400"><span className="text-gray-500">$</span> homey --settle-in="austin"</p>
+                <p className="text-gray-400">Analyzing your routine...</p>
+                <p className="text-green-400">Matching your vibe...</p>
+                <p className="text-white font-bold">✓ Your Nest is ready!</p>
               </div>
             </div>
           </div>
