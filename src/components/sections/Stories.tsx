@@ -1,12 +1,4 @@
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-
 export const Stories = () => {
   const stories = [
     {
@@ -46,47 +38,33 @@ export const Stories = () => {
           </h2>
         </div>
         
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full max-w-5xl mx-auto"
-        >
-          <CarouselContent>
-            {stories.map((story, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-4">
-                  <div className="space-y-6 group">
-                    <div 
-                      className="aspect-[4/5] rounded-xl bg-card overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-500 ease-in-out"
-                    >
-                      <div 
-                        className="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                        style={{
-                          backgroundImage: `url('https://images.unsplash.com/photo-${story.img}?q=80&w=800&auto=format&fit=crop')`,
-                        }}
-                      />
-                    </div>
-                    
-                    <div className="text-center">
-                      <blockquote className="text-lg font-serif text-foreground/80 italic mb-4">
-                        "{story.quote}"
-                      </blockquote>
-                      
-                      <div className="font-sans">
-                        <p className="font-bold text-foreground">{story.author}</p>
-                        <p className="text-sm text-muted-foreground">{story.location}</p>
-                      </div>
-                    </div>
-                  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {stories.map((story, index) => (
+            <div key={index} className="space-y-6 group">
+              <div 
+                className="aspect-[4/5] rounded-xl bg-card overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-500 ease-in-out"
+              >
+                <div 
+                  className="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                  style={{
+                    backgroundImage: `url('https://images.unsplash.com/photo-${story.img}?q=80&w=800&auto=format&fit=crop')`,
+                  }}
+                />
+              </div>
+              
+              <div className="text-center">
+                <blockquote className="text-lg font-serif text-foreground/80 italic mb-4">
+                  "{story.quote}"
+                </blockquote>
+                
+                <div className="font-sans">
+                  <p className="font-bold text-foreground">{story.author}</p>
+                  <p className="text-sm text-muted-foreground">{story.location}</p>
                 </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex" />
-          <CarouselNext className="hidden sm:flex" />
-        </Carousel>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
