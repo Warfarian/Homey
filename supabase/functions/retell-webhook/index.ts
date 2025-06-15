@@ -1,4 +1,3 @@
-
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 
@@ -22,47 +21,64 @@ serve(async (req) => {
         return new Response(JSON.stringify({ message: "Ping received" }), { status: 200, headers: corsHeaders });
     }
 
-    if (body.event === 'conversation_ended' && body.transcript_object) {
-        const lastTurn = body.transcript_object[body.transcript_object.length - 1];
+    if (body.event === 'call_ended' && body.call?.transcript) {
+        const userId = body.call.metadata?.user_id;
 
-        if (lastTurn.role === 'agent' && lastTurn.function_call?.name === 'save_onboarding_preferences') {
-            const args = JSON.parse(lastTurn.function_call.arguments);
-            const userId = body.metadata?.user_id;
-
-            if (!userId) {
-                throw new Error("User ID not found in webhook metadata");
-            }
-
-            const supabaseAdmin = createClient(
-                Deno.env.get('SUPABASE_URL') ?? '',
-                Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
-                { auth: { persistSession: false } }
-            );
-
-            console.log(`Saving preferences for user ${userId}:`, args);
-
-            const { error: responseError } = await supabaseAdmin
-                .from('onboarding_responses')
-                .upsert({
-                    user_id: userId,
-                    transport: args.transport_methods,
-                    categories: args.categories,
-                    values: args.values,
-                    tags: args.tags,
-                    additional_notes: args.additional_notes
-                }, { onConflict: 'user_id' });
-
-            if (responseError) throw responseError;
-            console.log(`Successfully saved onboarding responses for user ${userId}`);
-
-            const { error: profileError } = await supabaseAdmin
-                .from('profiles')
-                .update({ onboarding_completed: true })
-                .eq('id', userId);
-
-            if (profileError) throw profileError;
-            console.log(`Successfully marked onboarding as complete for user ${userId}`);
+        if (!userId) {
+            throw new Error("User ID not found in webhook metadata");
         }
+
+        console.log(`Processing transcript for user ${userId}`);
+
+        // Extract JSON from the transcript
+        const transcript = body.call.transcript;
+        const jsonMatch = transcript.match(/```json\s*(\{[\s\S]*?\})\s*```/);
+        
+        if (!jsonMatch) {
+            console.log("No JSON found in transcript, skipping onboarding data extraction");
+            return new Response(JSON.stringify({ success: true, message: "No structured data found" }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            });
+        }
+
+        let onboardingData;
+        try {
+            onboardingData = JSON.parse(jsonMatch[1]);
+            console.log("Extracted onboarding data:", onboardingData);
+        } catch (parseError) {
+            console.error("Failed to parse JSON from transcript:", parseError);
+            throw new Error("Invalid JSON in transcript");
+        }
+
+        const supabaseAdmin = createClient(
+            Deno.env.get('SUPABASE_URL') ?? '',
+            Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+            { auth: { persistSession: false } }
+        );
+
+        // Save onboarding responses
+        const { error: responseError } = await supabaseAdmin
+            .from('onboarding_responses')
+            .upsert({
+                user_id: userId,
+                transport: onboardingData.transport_methods || [],
+                categories: onboardingData.categories || [],
+                values: onboardingData.values || [],
+                tags: onboardingData.tags || [],
+                additional_notes: onboardingData.additional_notes || ''
+            }, { onConflict: 'user_id' });
+
+        if (responseError) throw responseError;
+        console.log(`Successfully saved onboarding responses for user ${userId}`);
+
+        // Mark onboarding as complete
+        const { error: profileError } = await supabaseAdmin
+            .from('profiles')
+            .update({ onboarding_completed: true })
+            .eq('id', userId);
+
+        if (profileError) throw profileError;
+        console.log(`Successfully marked onboarding as complete for user ${userId}`);
     }
 
     return new Response(JSON.stringify({ success: true }), {

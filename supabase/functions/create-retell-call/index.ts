@@ -122,7 +122,7 @@ serve(async (req) => {
     // Prepare Retell API call
     const retellPayload = {
       agent_id: agentId,
-      from_number: '+1337358-5199',
+      from_number: '+13373585199',
       to_number: formattedNumber,
       metadata: {
         user_id: user.id,

@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bot, Mic, ArrowRight } from "lucide-react";
@@ -20,7 +19,13 @@ export const PathChoiceStep = ({ onPathSelect }: PathChoiceStepProps) => {
                             <div className="bg-primary/10 p-3 rounded-lg"><Mic className="w-8 h-8 text-primary" /></div>
                             <CardTitle className="text-2xl">Talk to Homey</CardTitle>
                         </div>
-                        <CardDescription className="pt-2">Have a natural conversation with our voice assistant.</CardDescription>
+                        <CardDescription className="pt-2">
+                            Have a natural conversation with our voice assistant.
+                            <br />
+                            <span className="text-xs text-muted-foreground mt-1 block">
+                                Note: Currently only works with verified phone numbers due to student budget limitations.
+                            </span>
+                        </CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow flex items-end">
                         <Button className="w-full" onClick={(e) => { e.stopPropagation(); onPathSelect('voice'); }}>
