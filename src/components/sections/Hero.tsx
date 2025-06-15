@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AudioModal } from "@/components/modals/AudioModal";
 import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
+import { AtoBGraphic } from "../AtoBGraphic";
 
 export const Hero = () => {
   const [showAudioModal, setShowAudioModal] = useState(false);
@@ -40,6 +41,10 @@ export const Hero = () => {
           >
             Hear Homey's Voice
           </Button>
+        </div>
+
+        <div className="mt-20">
+          <AtoBGraphic />
         </div>
       </div>
       

@@ -3,7 +3,7 @@ import { Home, User, MoveRight } from 'lucide-react';
 
 export const AtoBGraphic = () => {
   return (
-    <div className="flex items-center justify-center gap-8 md:gap-16 my-12">
+    <div className="flex items-center justify-center gap-8 md:gap-16">
       {/* Point A */}
       <div className="flex flex-col items-center gap-2 text-muted-foreground">
         <Home className="w-12 h-12 md:w-16 md:h-16" />
