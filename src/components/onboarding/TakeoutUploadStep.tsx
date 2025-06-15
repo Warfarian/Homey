@@ -42,7 +42,7 @@ export const TakeoutUploadStep = ({ onSuccess }: TakeoutUploadStepProps) => {
             <CardHeader>
                 <CardTitle className="text-2xl font-bold font-serif">Upload Your History</CardTitle>
                 <CardDescription>
-                    To help me understand you better, please upload your Google Maps Search History from your Takeout download. Don’t worry, we’ll guide you after this.
+                    To help me understand you better, please upload your Google Maps Timeline history from your Takeout download. It should be a JSON file. Don’t worry, we’ll guide you after this.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -50,12 +50,15 @@ export const TakeoutUploadStep = ({ onSuccess }: TakeoutUploadStepProps) => {
                     <a href="https://takeout.google.com/settings/takeout/custom/location_history" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline flex items-center gap-1 text-sm">
                         Go to Google Takeout <ExternalLink size={14}/>
                     </a>
+                    <div className="text-sm text-muted-foreground p-3 bg-muted rounded-md border">
+                        <p><strong>Heads up:</strong> Google has changed its policy. You can now only download your location history (Timeline) as a JSON file from the Google Maps app on your phone. It is no longer available from the Takeout website on a computer.</p>
+                    </div>
                     <Input
                         type="file"
                         ref={fileInputRef}
                         onChange={handleFileChange}
                         className="hidden"
-                        accept=".txt"
+                        accept=".json"
                         disabled={isParsing}
                     />
                     <Button onClick={handleUploadClick} variant="secondary" className="w-full" disabled={isParsing}>
