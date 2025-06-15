@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { AudioModal } from "@/components/modals/AudioModal";
-import { AtoBGraphic } from "@/components/AtoBGraphic";
 import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 
@@ -10,7 +9,7 @@ export const Hero = () => {
   const [showAudioModal, setShowAudioModal] = useState(false);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
+    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
@@ -21,11 +20,9 @@ export const Hero = () => {
           Feel at home, faster.
         </h2>
         
-        <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-8">
-          Moving to a new city is hard. Homey is your personal AI friend that connects you with places and people that match your vibe, so you can settle in, not just move in.
+        <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-12">
+          Moving to a new city is tough. Homey is your personal AI pal that helps you find your footing, connecting you to the people and places that make a new city feel like your city.
         </p>
-        
-        <AtoBGraphic />
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button 
