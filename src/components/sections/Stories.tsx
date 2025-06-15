@@ -22,36 +22,29 @@ export const Stories = () => {
   ];
 
   return (
-    <section className="py-24 px-8 bg-background">
+    <section className="py-24 px-8 bg-secondary/50">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <p className="font-sans text-sm uppercase tracking-widest text-primary font-semibold mb-4">Stories of Settling In</p>
-          <h2 className="font-serif text-5xl md:text-6xl font-bold text-foreground leading-tight">
-            Finding your place, <br />
-            one recommendation at a time.
+        <div className="text-center mb-16">
+          <p className="font-sans text-sm uppercase tracking-widest text-primary font-semibold mb-2">Success Stories</p>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground">
+            From new, to known.
           </h2>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-12">
-          {stories.map((story, index) => (
-            <div key={index} className="space-y-6 group">
+        <div className="grid md:grid-cols-3 gap-8">
+          {stories.map((story) => (
+            <div key={story.author} className="flex flex-col bg-background rounded-lg overflow-hidden border border-border/50 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10">
               <div 
-                className="aspect-[4/5] rounded-xl bg-card overflow-hidden shadow-lg transform group-hover:scale-105 transition-transform duration-500 ease-in-out"
-              >
-                <div 
-                  className="w-full h-full bg-cover bg-center transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                  style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-${story.img}?q=80&w=800&auto=format&fit=crop')`,
-                  }}
-                />
-              </div>
-              
-              <div className="text-center">
-                <blockquote className="text-lg font-serif text-foreground/80 italic mb-4">
+                className="aspect-video bg-cover bg-center"
+                style={{
+                  backgroundImage: `url('https://images.unsplash.com/photo-${story.img}?q=80&w=800&auto=format&fit=crop')`,
+                }}
+              />
+              <div className="p-6 flex-grow flex flex-col justify-between text-left">
+                <blockquote className="text-base font-serif text-muted-foreground italic mb-4">
                   "{story.quote}"
                 </blockquote>
-                
-                <div className="font-sans">
+                <div className="font-sans text-right">
                   <p className="font-bold text-foreground">{story.author}</p>
                   <p className="text-sm text-muted-foreground">{story.location}</p>
                 </div>

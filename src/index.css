@@ -5,65 +5,66 @@
 
 @layer base {
   :root {
-    --background: 40 50% 98%; /* stone-50 */
-    --foreground: 40 10% 20%; /* stone-800 */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 40 50% 98%;
-    --card-foreground: 40 10% 20%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 40 50% 98%;
-    --popover-foreground: 40 10% 20%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 38 92% 50%; /* orange-400 */
-    --primary-foreground: 40 10% 99%; /* stone-50 */
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 40 10% 95%; /* stone-100 */
-    --secondary-foreground: 40 10% 25%; /* stone-700 */
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 40 10% 90%; /* stone-200 */
-    --muted-foreground: 40 5% 45%; /* stone-500 */
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 40 10% 95%; /* stone-100 */
-    --accent-foreground: 40 10% 25%; /* stone-700 */
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 40 10% 85%; /* stone-300 */
-    --input: 40 10% 85%; /* stone-300 */
-    --ring: 38 92% 50%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 24.6 95% 53.1%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
   }
 
+  /* The .dark class is kept for potential future use, but the default theme is now dark. */
   .dark {
-    --background: 40 10% 10%; /* stone-900 */
-    --foreground: 40 50% 98%; /* stone-50 */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
 
-    --card: 40 10% 10%;
-    --card-foreground: 40 50% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 40 10% 10%;
-    --popover-foreground: 40 50% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 38 92% 50%;
-    --primary-foreground: 40 10% 10%;
+    --primary: 24.6 95% 53.1%;
+    --primary-foreground: 240 5.9% 10%;
 
-    --secondary: 40 10% 15%; /* stone-800 */
-    --secondary-foreground: 40 50% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 40 10% 15%;
-    --muted-foreground: 40 5% 55%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
 
-    --accent: 40 10% 15%;
-    --accent-foreground: 40 50% 98%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 40 10% 25%; /* stone-700 */
-    --input: 40 10% 25%;
-    --ring: 38 92% 50%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 24.6 95% 53.1%;
   }
 }
 
