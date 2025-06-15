@@ -20,7 +20,7 @@ export const AudioModal = ({ isOpen, onClose }: AudioModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md bg-stone-50 border-stone-200">
+      <DialogContent className="max-w-md bg-card border-border">
         <DialogHeader>
           <DialogTitle className="text-2xl font-light text-center mb-6">
             Listen to Homey
@@ -29,13 +29,13 @@ export const AudioModal = ({ isOpen, onClose }: AudioModalProps) => {
         
         <div className="text-center space-y-6">
           <div className="flex justify-center">
-            <div className={`w-20 h-20 rounded-full border-2 border-stone-400 flex items-center justify-center transition-all duration-300 ${isPlaying ? 'bg-green-500 border-green-500 scale-110' : 'hover:border-stone-600'}`}>
-              <Phone className={`w-8 h-8 ${isPlaying ? 'text-white animate-pulse' : 'text-stone-600'}`} />
+            <div className={`w-20 h-20 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${isPlaying ? 'bg-green-500 border-green-500 scale-110' : 'border-muted hover:border-muted-foreground'}`}>
+              <Phone className={`w-8 h-8 ${isPlaying ? 'text-white animate-pulse' : 'text-muted-foreground'}`} />
             </div>
           </div>
           
           <div className="space-y-2">
-            <p className="text-stone-700 italic">
+            <p className="text-muted-foreground italic">
               "Hey Sarah, I found this cozy bookstore called Chapter & Verse about 10 minutes from your new place. They have that poetry section you mentioned loving, plus they serve single-origin coffee. Want me to save it for you?"
             </p>
           </div>
@@ -43,7 +43,8 @@ export const AudioModal = ({ isOpen, onClose }: AudioModalProps) => {
           <Button 
             onClick={handlePlay}
             disabled={isPlaying}
-            className="w-full bg-stone-800 hover:bg-stone-700 text-white"
+            variant="secondary"
+            className="w-full"
           >
             {isPlaying ? "Playing..." : "Play Sample Call"}
           </Button>
