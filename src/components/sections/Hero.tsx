@@ -16,10 +16,10 @@ export const Hero = () => {
       </div>
       
       <div className="max-w-4xl mx-auto">
-        <h2 className="font-sans text-2xl md:text-3xl font-bold uppercase tracking-widest text-primary mb-4">Homey</h2>
-        <h1 className="font-serif text-5xl md:text-7xl font-bold text-foreground mb-4">
+        <h1 className="font-sans text-6xl md:text-8xl font-black uppercase tracking-widest text-primary mb-2">Homey</h1>
+        <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
           Feel at home, faster.
-        </h1>
+        </h2>
         
         <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-8">
           Moving to a new city is hard. Homey is your personal AI friend that connects you with places and people that match your vibe, so you can settle in, not just move in.
