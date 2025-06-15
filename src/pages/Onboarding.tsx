@@ -50,7 +50,7 @@ const Onboarding = () => {
         isRedirecting.current = true;
         // Only redirect if we're not in the chat flow step to avoid conflicts
         if (step !== 'chat_flow') {
-          navigate('/');
+          navigate('/explore');
         }
       }
       return;

@@ -9,6 +9,38 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      explore_recommendations: {
+        Row: {
+          created_at: string
+          id: string
+          recommendations: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          recommendations: Json
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          recommendations?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "explore_recommendations_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       onboarding_responses: {
         Row: {
           additional_notes: string | null
@@ -82,6 +114,53 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      saved_places: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          location: string | null
+          match_reason: string | null
+          match_score: number | null
+          name: string
+          place_id: string
+          user_id: string
+          user_notes: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          match_reason?: string | null
+          match_score?: number | null
+          name: string
+          place_id: string
+          user_id: string
+          user_notes?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          location?: string | null
+          match_reason?: string | null
+          match_score?: number | null
+          name?: string
+          place_id?: string
+          user_id?: string
+          user_notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "saved_places_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {

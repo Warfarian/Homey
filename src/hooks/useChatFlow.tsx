@@ -74,7 +74,7 @@ export const useChatFlow = () => {
             if (profileError) throw profileError;
         },
         onSuccess: () => {
-            console.log("useChatFlow: Preferences saved. Navigating to home.");
+            console.log("useChatFlow: Preferences saved. Navigating to explore page.");
 
             toast({
                 title: "Preferences saved!",
@@ -97,7 +97,7 @@ export const useChatFlow = () => {
 
             // Navigate directly to home after successful completion
             setTimeout(() => {
-                navigate('/');
+                navigate('/explore');
             }, 1500); // Small delay to show completion message
         },
         onError: (error) => {
