@@ -1,24 +1,22 @@
 
-import { Hero } from "@/components/sections/Hero";
-import { BrandPhilosophy } from "@/components/sections/BrandPhilosophy";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { VoiceDemo } from "@/components/sections/VoiceDemo";
-import { Technology } from "@/components/sections/Technology";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { WaitlistCTA } from "@/components/sections/WaitlistCTA";
-import { Footer } from "@/components/layout/Footer";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { Problem } from "@/components/sections/Problem";
+import { Process } from "@/components/sections/Process";
+import { Nest } from "@/components/sections/Nest";
+import { TechStack } from "@/components/sections/TechStack";
+import { UserTestimonials } from "@/components/sections/UserTestimonials";
+import { LaunchCTA } from "@/components/sections/LaunchCTA";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-stone-50">
-      <Hero />
-      <BrandPhilosophy />
-      <HowItWorks />
-      <VoiceDemo />
-      <Technology />
-      <Testimonials />
-      <WaitlistCTA />
-      <Footer />
+    <div className="min-h-screen bg-white text-black font-mono">
+      <Manifesto />
+      <Problem />
+      <Process />
+      <Nest />
+      <TechStack />
+      <UserTestimonials />
+      <LaunchCTA />
     </div>
   );
 };
