@@ -65,12 +65,7 @@ export const useChatFlow = () => {
             if (profileError) throw profileError;
         },
         onSuccess: () => {
-            console.log("useChatFlow: Preferences saved. Invalidating profile to trigger redirect.");
-
-            // Invalidate to refetch in the background for data consistency.
-            // This will cause the useQuery in Onboarding.tsx to refetch.
-            // Onboarding.tsx will then see `onboarding_completed: true` and redirect.
-            queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
+            console.log("useChatFlow: Preferences saved. Navigating to home.");
 
             toast({
                 title: "Preferences saved!",
@@ -79,7 +74,7 @@ export const useChatFlow = () => {
             
             const question = (
                 <ChatBubble key="review-q">
-                     <p className="text-lg font-medium">Here’s what I’ve got. Does this look right?</p>
+                     <p className="text-lg font-medium">Here's what I've got. Does this look right?</p>
                 </ChatBubble>
             );
             const answer = (
@@ -91,7 +86,10 @@ export const useChatFlow = () => {
             setCompletedSteps(prev => [...prev, question, answer]);
             setStep('complete');
 
-            // NOTE: Navigation is now handled by the Onboarding.tsx page based on the profile's completion status.
+            // Navigate directly to home after successful completion
+            setTimeout(() => {
+                navigate('/');
+            }, 1500); // Small delay to show completion message
         },
         onError: (error) => {
             console.error("Error saving onboarding data", error);

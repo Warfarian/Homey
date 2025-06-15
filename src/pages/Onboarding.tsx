@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -49,7 +48,10 @@ const Onboarding = () => {
       if (!isRedirecting.current) {
         console.log("Onboarding Page: Profile shows onboarding is complete. Initiating redirect.");
         isRedirecting.current = true;
-        navigate('/');
+        // Only redirect if we're not in the chat flow step to avoid conflicts
+        if (step !== 'chat_flow') {
+          navigate('/');
+        }
       }
       return;
     }
@@ -73,7 +75,7 @@ const Onboarding = () => {
       setInitialStepDetermined(true);
       setStep('profile');
     }
-  }, [isLoadingProfile, profile, user, navigate, initialStepDetermined]);
+  }, [isLoadingProfile, profile, user, navigate, initialStepDetermined, step]);
 
   const handleProfileUpdateSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
