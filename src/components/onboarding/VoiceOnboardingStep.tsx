@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
@@ -48,12 +47,11 @@ export const VoiceOnboardingStep = ({ onSuccess }: VoiceOnboardingStepProps) => 
     try {
       const { data, error: funcError } = await supabase.functions.invoke('create-retell-call');
       if (funcError) throw funcError;
+      if (!data) {
+        throw new Error('Call creation returned no data.');
+      }
       
-      await retellClient.startCall({
-          call_id: data.call_id,
-          sample_rate: data.sample_rate,
-          enable_update: data.enable_update,
-      });
+      await retellClient.startCall(data);
 
       setIsCalling(true);
     } catch (err: any) {
