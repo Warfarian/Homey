@@ -2,6 +2,8 @@ import { ChatBubble } from './ChatBubble';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Loader2 } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 interface ReviewStepProps {
     data: {
@@ -9,9 +11,11 @@ interface ReviewStepProps {
         categories?: string[];
         values?: string[];
         tags?: string[];
+        additional_notes?: string;
     };
     onNext: () => void;
     isLoading?: boolean;
+    onNotesChange: (notes: string) => void;
 }
 
 const DataSection = ({ title, items }: { title: string, items?: string[] }) => {
@@ -24,7 +28,7 @@ const DataSection = ({ title, items }: { title: string, items?: string[] }) => {
     )
 }
 
-export const ReviewStep = ({ data, onNext, isLoading }: ReviewStepProps) => {
+export const ReviewStep = ({ data, onNext, isLoading, onNotesChange }: ReviewStepProps) => {
     return (
         <div className="flex flex-col items-start gap-6 w-full">
             <ChatBubble>
@@ -35,6 +39,16 @@ export const ReviewStep = ({ data, onNext, isLoading }: ReviewStepProps) => {
                         <DataSection title="Important Places" items={data.categories} />
                         <DataSection title="Place Vibe" items={data.values} />
                         <DataSection title="Keywords" items={data.tags} />
+                        <div className="space-y-2 pt-2">
+                            <Label htmlFor="additional-notes" className="font-semibold text-muted-foreground">Anything else to add? (Optional)</Label>
+                            <Textarea
+                                id="additional-notes"
+                                placeholder="e.g., I'm looking for a place near a dog park, or I prefer modern architecture."
+                                value={data.additional_notes || ''}
+                                onChange={(e) => onNotesChange(e.target.value)}
+                                className="bg-background"
+                            />
+                        </div>
                     </CardContent>
                 </Card>
             </ChatBubble>

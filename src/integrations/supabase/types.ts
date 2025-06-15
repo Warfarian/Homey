@@ -11,6 +11,7 @@ export type Database = {
     Tables: {
       onboarding_responses: {
         Row: {
+          additional_notes: string | null
           categories: string[] | null
           created_at: string
           id: string
@@ -21,6 +22,7 @@ export type Database = {
           values: string[] | null
         }
         Insert: {
+          additional_notes?: string | null
           categories?: string[] | null
           created_at?: string
           id?: string
@@ -31,6 +33,7 @@ export type Database = {
           values?: string[] | null
         }
         Update: {
+          additional_notes?: string | null
           categories?: string[] | null
           created_at?: string
           id?: string

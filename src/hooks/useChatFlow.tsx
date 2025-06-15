@@ -9,13 +9,21 @@ import { useToast } from '@/components/ui/use-toast';
 
 export type ChatOnboardingStep = 'welcome' | 'transport' | 'categories' | 'values' | 'tags' | 'review' | 'complete';
 
+interface OnboardingData {
+    transport?: string[];
+    categories?: string[];
+    values?: string[];
+    tags?: string[];
+    additional_notes?: string;
+}
+
 export const useChatFlow = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     const { toast } = useToast();
     const [step, setStep] = useState<ChatOnboardingStep>('welcome');
-    const [onboardingData, setOnboardingData] = useState<any>({});
+    const [onboardingData, setOnboardingData] = useState<OnboardingData>({});
     const [completedSteps, setCompletedSteps] = useState<React.ReactNode[]>([]);
     const [isAiThinking, setIsAiThinking] = useState(false);
 
@@ -38,7 +46,7 @@ export const useChatFlow = () => {
     });
 
     const saveOnboardingData = useMutation({
-        mutationFn: async (data: any) => {
+        mutationFn: async (data: OnboardingData) => {
             if (!user) throw new Error("User not found");
 
             // Ensure profile exists before saving responses to prevent FK violation.
@@ -53,6 +61,7 @@ export const useChatFlow = () => {
                     categories: data.categories,
                     values: data.values,
                     tags: data.tags,
+                    additional_notes: data.additional_notes,
                 }, { onConflict: 'user_id' });
 
             if (responseError) throw responseError;
@@ -236,6 +245,10 @@ export const useChatFlow = () => {
         saveOnboardingData.mutate(onboardingData);
     };
 
+    const handleNotesUpdate = (notes: string) => {
+        setOnboardingData(prev => ({ ...prev, additional_notes: notes }));
+    };
+
     return {
         isLoading,
         completedSteps,
@@ -249,6 +262,7 @@ export const useChatFlow = () => {
         handleCategoriesNext,
         handleValuesNext,
         handleTagsNext,
-        handleReviewNext
+        handleReviewNext,
+        handleNotesUpdate
     };
 };

@@ -25,6 +25,7 @@ export const ChatFlow = () => {
         handleValuesNext,
         handleTagsNext,
         handleReviewNext,
+        handleNotesUpdate,
     } = useChatFlow();
 
     if (isLoading) {
@@ -55,7 +56,12 @@ export const ChatFlow = () => {
             case 'tags':
                 return <TagsStep onNext={handleTagsNext} />;
             case 'review':
-                return <ReviewStep data={onboardingData} onNext={handleReviewNext} isLoading={saveOnboardingData.isPending} />;
+                return <ReviewStep 
+                    data={onboardingData} 
+                    onNext={handleReviewNext} 
+                    isLoading={saveOnboardingData.isPending}
+                    onNotesChange={handleNotesUpdate} 
+                />;
             case 'complete':
                  return <ChatBubble>All done! Taking you to your personalized dashboard now...</ChatBubble>;
             default:
