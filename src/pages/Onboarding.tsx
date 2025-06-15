@@ -40,34 +40,30 @@ const Onboarding = () => {
   });
 
   const [step, setStep] = useState<OnboardingStep>('profile');
-  const [takeoutUploaded, setTakeoutUploaded] = useState(false);
-
-  const isProfileComplete = !!(profile && profile.full_name && profile.age && profile.gender);
+  const [initialStepDetermined, setInitialStepDetermined] = useState(false);
 
   useEffect(() => {
-    if (isLoadingProfile) {
+    if (isLoadingProfile || initialStepDetermined) {
       return;
     }
 
     if (profile) {
+      setInitialStepDetermined(true);
       if (profile.onboarding_completed) {
         navigate('/');
         return;
       }
+      const isProfileComplete = !!(profile.full_name && profile.age && profile.gender);
       if (isProfileComplete) {
-        if (takeoutUploaded) {
-          setStep('path_choice');
-        } else {
-          setStep('takeout_upload');
-        }
+        setStep('takeout_upload');
       } else {
         setStep('profile');
       }
-    } else {
-      // No profile exists, stay on the profile creation step
+    } else if (user && !isLoadingProfile) {
+      setInitialStepDetermined(true);
       setStep('profile');
     }
-  }, [isLoadingProfile, profile, navigate, isProfileComplete, takeoutUploaded]);
+  }, [isLoadingProfile, profile, user, navigate, initialStepDetermined]);
 
   const handleProfileUpdateSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
@@ -75,7 +71,7 @@ const Onboarding = () => {
   };
 
   const handleTakeoutUploadSuccess = () => {
-    setTakeoutUploaded(true);
+    setStep('path_choice');
   };
 
   const handlePathChoice = (path: 'chat' | 'voice') => {
@@ -111,7 +107,7 @@ const Onboarding = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4">
-      {isLoadingProfile ? (
+      {isLoadingProfile && !initialStepDetermined ? (
         <div className="flex items-center gap-2">
           <Loader2 className="w-6 h-6 animate-spin" />
           <p className="text-muted-foreground">Loading your profile...</p>
