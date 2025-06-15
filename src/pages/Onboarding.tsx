@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -41,12 +41,16 @@ const Onboarding = () => {
 
   const [step, setStep] = useState<OnboardingStep>('profile');
   const [initialStepDetermined, setInitialStepDetermined] = useState(false);
+  const isRedirecting = useRef(false);
 
   useEffect(() => {
-    // This is the most important check. If profile is loaded and complete, always redirect.
+    // If onboarding is complete, redirect to home. The ref prevents multiple redirects.
     if (profile?.onboarding_completed) {
-      console.log("Onboarding Page: Profile shows onboarding is complete. Redirecting to home.");
-      navigate('/');
+      if (!isRedirecting.current) {
+        console.log("Onboarding Page: Profile shows onboarding is complete. Initiating redirect.");
+        isRedirecting.current = true;
+        navigate('/');
+      }
       return;
     }
 
@@ -110,6 +114,19 @@ const Onboarding = () => {
         return null;
     }
   };
+
+  // If we know onboarding is done, show a dedicated redirecting screen.
+  // This prevents flashing the regular onboarding UI while the useEffect triggers the redirect.
+  if (profile?.onboarding_completed) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4">
+        <div className="flex items-center gap-2">
+          <Loader2 className="w-6 h-6 animate-spin" />
+          <p className="text-muted-foreground">Onboarding complete! Redirecting...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4">

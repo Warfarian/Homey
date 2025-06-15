@@ -65,18 +65,11 @@ export const useChatFlow = () => {
             if (profileError) throw profileError;
         },
         onSuccess: () => {
-            console.log("useChatFlow: Preferences saved. Updating cache and UI.");
+            console.log("useChatFlow: Preferences saved. Invalidating profile to trigger redirect.");
 
-            // Optimistically update the profile in the cache to reflect completion
-            queryClient.setQueryData(['profile', user?.id], (oldData: any) => {
-                if (oldData) {
-                    console.log("useChatFlow: Optimistically setting onboarding_completed to true in cache.");
-                    return { ...oldData, onboarding_completed: true };
-                }
-                return oldData;
-            });
-
-            // Also invalidate to refetch in the background for data consistency
+            // Invalidate to refetch in the background for data consistency.
+            // This will cause the useQuery in Onboarding.tsx to refetch.
+            // Onboarding.tsx will then see `onboarding_completed: true` and redirect.
             queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
 
             toast({
