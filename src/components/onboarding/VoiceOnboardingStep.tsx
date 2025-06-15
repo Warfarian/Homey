@@ -50,9 +50,9 @@ export const VoiceOnboardingStep = ({ onSuccess }: VoiceOnboardingStepProps) => 
       if (funcError) throw funcError;
       
       await retellClient.startCall({
-          callId: data.call_id,
-          sampleRate: data.sample_rate,
-          enableUpdate: data.enable_update,
+          call_id: data.call_id,
+          sample_rate: data.sample_rate,
+          enable_update: data.enable_update,
       });
 
       setIsCalling(true);
