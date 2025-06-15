@@ -116,13 +116,13 @@ serve(async (req) => {
     }
     
     // Agent ID
-    const agentId = 'agent_b942750aee8fba37f10587192b';
+    const agentId = 'agent_f0a6e5b0a64071d4dbc18fb403';
     console.log('Using agent ID:', agentId);
 
     // Prepare Retell API call
     const retellPayload = {
       agent_id: agentId,
-      from_number: '+15075193337',
+      from_number: '+1337358-5199',
       to_number: formattedNumber,
       metadata: {
         user_id: user.id,
