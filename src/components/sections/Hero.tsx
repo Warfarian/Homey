@@ -15,14 +15,14 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-r from-background via-secondary to-background bg-[length:200%_200%] animate-gradient-pan py-20 px-4">
+    <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-secondary to-background py-20 px-4">
       <FloatingIconsBackground />
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
       
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-sans text-6xl md:text-8xl font-bold uppercase tracking-widest text-primary mb-2">Homey</h1>
+        <h1 className="font-serif text-7xl md:text-9xl font-bold text-primary mb-2">Homey</h1>
         <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
           Feel at home, faster.
         </h2>
