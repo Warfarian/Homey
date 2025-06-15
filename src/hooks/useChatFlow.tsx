@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -41,6 +40,10 @@ export const useChatFlow = () => {
     const saveOnboardingData = useMutation({
         mutationFn: async (data: any) => {
             if (!user) throw new Error("User not found");
+
+            // Ensure profile exists before saving responses to prevent FK violation.
+            // This is a safeguard for cases where the user's profile wasn't created on sign-up.
+            await supabase.from('profiles').upsert({ id: user.id }, { onConflict: 'id' });
 
             const { error: responseError } = await supabase
                 .from('onboarding_responses')
