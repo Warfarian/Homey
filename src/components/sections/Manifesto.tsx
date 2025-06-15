@@ -6,7 +6,7 @@ import { ThemeToggle } from "../ThemeToggle";
 import { AtoBGraphic } from "../AtoBGraphic";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
+import { Loader2, ShoppingCart, HeartPulse, Dumbbell, Palette, GlassWater, Utensils, Trees, Coffee, Briefcase, Church } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 
