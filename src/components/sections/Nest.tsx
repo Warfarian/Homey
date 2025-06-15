@@ -31,7 +31,7 @@ export const Nest = () => {
           
           <div className="space-y-4">
             {nestItems.map((item, index) => (
-              <div key={index} className="border-2 border-black bg-white p-4">
+              <div key={index} className="border-2 border-black bg-white p-4 transition-all duration-300 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-md cursor-default">
                 <div className="font-mono text-sm text-gray-500 mb-2">
                   {item.category}
                 </div>

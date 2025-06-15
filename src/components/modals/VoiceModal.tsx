@@ -31,10 +31,10 @@ export const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           </div>
           
           <div className="bg-black text-green-400 p-6 font-mono text-sm">
-            <p className="mb-4">&gt; Homely: Hi, I'm Homely. I help people settle into new cities.</p>
+            <p className="mb-4">&gt; Homey: Hi, I'm Homey. I help people settle into new cities.</p>
             <p className="mb-4">&gt; Tell me about where you just moved from and what you miss most.</p>
             <p className="mb-4">&gt; User: I moved from Portland to Austin. I miss my quiet coffee shop...</p>
-            <p className="mb-4">&gt; Homely: Got it. What time did you usually go? What did you order?</p>
+            <p className="mb-4">&gt; Homey: Got it. What time did you usually go? What did you order?</p>
             <p>&gt; [CONVERSATION_CONTINUES...]</p>
           </div>
           
@@ -62,9 +62,9 @@ export const VoiceModal = ({ isOpen, onClose }: VoiceModalProps) => {
           
           <Button
             onClick={onClose}
-            className="w-full bg-black text-white hover:bg-gray-800 font-mono tracking-wider py-3 rounded-none"
+            className="w-full bg-black text-white hover:bg-gray-800 font-mono tracking-wider py-3 rounded-none transition-transform duration-200 transform hover:scale-[1.03]"
           >
-            START ACTUAL ONBOARDING →
+            OK, LET'S TALK →
           </Button>
         </div>
       </div>

@@ -2,7 +2,7 @@
 export const Process = () => {
   const steps = [
     { id: "01", title: "USER MOVES", detail: "Relocation event occurs" },
-    { id: "02", title: "HOMELY ONBOARDS", detail: "Via conversation + preferences" },
+    { id: "02", title: "HOMEY ONBOARDS", detail: "Via conversation + preferences" },
     { id: "03", title: "ANALYZES MAPS HISTORY", detail: "Pattern recognition from past behavior" },
     { id: "04", title: "RECOMMENDS YOUR NEST", detail: "Curated local equivalents" },
     { id: "05", title: "YOU LIVE, NOT SEARCH", detail: "Behavioral continuity restored" }
@@ -16,8 +16,8 @@ export const Process = () => {
         </h2>
         
         <div className="space-y-8">
-          {steps.map((step, index) => (
-            <div key={step.id} className="grid md:grid-cols-4 gap-8 items-center border-b border-gray-200 pb-8">
+          {steps.map((step) => (
+            <div key={step.id} className="grid md:grid-cols-4 gap-8 items-center border-b border-gray-200 pb-8 transition-colors duration-300 hover:bg-gray-50 -mx-4 px-4 cursor-default">
               <div className="font-mono text-2xl font-black">
                 {step.id}
               </div>
@@ -42,7 +42,7 @@ export const Process = () => {
               <h4 className="font-mono font-bold mb-4">[AUDIO_SAMPLE]</h4>
               <div className="bg-white p-4 border-2 border-black">
                 <p className="font-mono text-sm">
-                  "Hi, it's Homely. I found three coffee shops that match your 
+                  "Hi, it's Homey. I found three coffee shops that match your 
                   morning routine. The first one opens at 6:30 and has that 
                   quiet corner table you like..."
                 </p>
@@ -51,7 +51,7 @@ export const Process = () => {
             <div>
               <h4 className="font-mono font-bold mb-4">[INTERFACE_PREVIEW]</h4>
               <div className="bg-black text-green-400 p-4 font-mono text-sm">
-                <p>$ homely --location="austin, tx"</p>
+                <p>$ homey --location="austin, tx"</p>
                 <p>$ analyzing behavioral patterns...</p>
                 <p>$ generating local matches...</p>
                 <p>$ nest created ✓</p>

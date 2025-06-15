@@ -35,7 +35,7 @@ export const Problem = () => {
             
             <div className="grid md:grid-cols-2 gap-4">
               {questions.map((question, index) => (
-                <div key={index} className="border-2 border-black p-6 bg-white">
+                <div key={index} className="border-2 border-black p-6 bg-white transition-all duration-300 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-md cursor-default">
                   <p className="font-mono text-lg">
                     {question}
                   </p>

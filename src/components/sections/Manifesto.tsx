@@ -12,8 +12,8 @@ export const Manifesto = () => {
         {/* Left: Title */}
         <div className="space-y-8">
           <div className="space-y-4">
-            <h1 className="text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] font-sans">
-              HOMELY
+            <h1 className="text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] font-sans transition-transform duration-300 hover:-rotate-1 origin-bottom-left cursor-pointer">
+              HOMEY
             </h1>
             <p className="text-lg font-mono text-gray-600 tracking-wider">
               [AI-ASSISTED CITY ADAPTATION]
@@ -22,9 +22,9 @@ export const Manifesto = () => {
           
           <Button 
             onClick={() => setShowVoiceModal(true)}
-            className="bg-black text-white hover:bg-gray-800 font-mono text-sm tracking-wider px-8 py-3 rounded-none border-2 border-black hover:bg-white hover:text-black transition-colors duration-200"
+            className="bg-black text-white hover:bg-gray-800 font-mono text-sm tracking-wider px-8 py-3 rounded-none border-2 border-black hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105"
           >
-            START ONBOARDING →
+            TALK TO HOMEY →
           </Button>
         </div>
         
@@ -37,7 +37,7 @@ export const Manifesto = () => {
             </p>
             
             <p className="text-lg font-mono leading-relaxed">
-              Homely solves for habit displacement using AI.
+              Homey solves for habit displacement using AI.
             </p>
           </div>
           

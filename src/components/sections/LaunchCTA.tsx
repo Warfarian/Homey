@@ -43,12 +43,12 @@ export const LaunchCTA = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 bg-transparent border-2 border-white text-white placeholder:text-gray-400 font-mono rounded-none focus:ring-0 focus:border-gray-300"
+              className="flex-1 bg-transparent border-2 border-white text-white placeholder:text-gray-400 font-mono rounded-none focus:ring-0 focus:border-gray-300 transition-transform duration-200 focus:scale-[1.02]"
             />
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-white text-black hover:bg-gray-200 font-mono tracking-wider px-8 rounded-none border-2 border-white"
+              className="bg-white text-black hover:bg-gray-200 font-mono tracking-wider px-8 rounded-none border-2 border-white transition-transform duration-200 transform hover:scale-105"
             >
               {isSubmitting ? "PROCESSING..." : "JOIN BETA →"}
             </Button>
@@ -58,11 +58,11 @@ export const LaunchCTA = () => {
         <div className="bg-gray-900 p-8 font-mono text-sm">
           <p className="mb-4">[PRIVACY_COMMITMENT]</p>
           <p>
-            Your data stays yours. Homely uses only what you consent to provide. 
+            Your data stays yours. Homey uses only what you consent to provide. 
             No tracking. No selling. No surveillance capitalism.
           </p>
           <p className="mt-4 text-gray-400">
-            Questions? Email us at research@homely.ai
+            Questions? Email us at research@homey.ai
           </p>
         </div>
       </div>
