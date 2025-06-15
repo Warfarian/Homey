@@ -1,12 +1,39 @@
 
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { VoiceModal } from "@/components/modals/VoiceModal";
-import { FormModal } from "@/components/modals/FormModal";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Navigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 export const Manifesto = () => {
-  const [showVoiceModal, setShowVoiceModal] = useState(false);
-  const [showFormModal, setShowFormModal] = useState(false);
+  const { session, loading } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogin = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+    });
+    if (error) {
+      toast({
+        title: "Login Error",
+        description: error.message,
+        variant: "destructive",
+      });
+      console.error("Login Error:", error);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section className="min-h-screen flex items-center justify-center px-8 py-16">
+        <div>Loading...</div>
+      </section>
+    );
+  }
+
+  if (session) {
+    return <Navigate to="/onboarding" replace />;
+  }
 
   return (
     <section className="min-h-screen flex items-center px-8 py-16">
@@ -24,17 +51,10 @@ export const Manifesto = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 items-start flex-wrap">
             <Button 
-              onClick={() => setShowVoiceModal(true)}
+              onClick={handleLogin}
               className="font-sans text-sm tracking-wider px-8 py-6 rounded-lg transition-all duration-300 transform hover:scale-105"
             >
-              TALK TO HOMEY →
-            </Button>
-            <Button 
-              onClick={() => setShowFormModal(true)}
-              variant="outline"
-              className="font-sans text-sm tracking-wider px-8 py-6 rounded-lg border-2 bg-transparent hover:bg-accent hover:text-accent-foreground transition-all duration-300 transform hover:scale-105"
-            >
-              OR, USE A FORM
+              Get Started →
             </Button>
           </div>
         </div>
@@ -59,9 +79,6 @@ export const Manifesto = () => {
           </div>
         </div>
       </div>
-      
-      <VoiceModal isOpen={showVoiceModal} onClose={() => setShowVoiceModal(false)} />
-      <FormModal isOpen={showFormModal} onClose={() => setShowFormModal(false)} />
     </section>
   );
 };
