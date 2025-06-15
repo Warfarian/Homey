@@ -1,12 +1,30 @@
 
 export const Problem = () => {
   const questions = [
-    "Where's my new go-to coffee spot?",
-    "Found a good barber yet?",
-    "Where can I go for a 7AM run?",
-    "Is there a grocery store that just *gets* me?",
-    "Who's going to be my new dentist?",
-    "Any quiet spots to read a book?"
+    {
+      q: "Where's my new go-to coffee spot?",
+      sub: "That doesn't require a secret handshake to order."
+    },
+    {
+      q: "Found a good barber yet?",
+      sub: "Who understands 'just a trim' isn't a philosophical concept."
+    },
+    {
+      q: "Where can I go for a 7AM run?",
+      sub: "That doesn't accidentally end in a different time zone."
+    },
+    {
+      q: "A grocery store that just *gets* me?",
+      sub: "And my emotional support pint of ice cream."
+    },
+    {
+      q: "Who's going to be my new dentist?",
+      sub: "Preferably one who doesn't hum along to the drill."
+    },
+    {
+      q: "Any quiet spots to read a book?",
+      sub: "Where the loudest sound is my own internal monologue."
+    }
   ];
 
   return (
@@ -19,10 +37,10 @@ export const Problem = () => {
             </h2>
             <div className="bg-foreground text-background p-6 rounded-lg font-sans text-sm shadow-lg">
               <p>
-                "The stress of moving isn't about finding A dentist. It's about finding YOUR dentist. The one that fits your vibe and doesn't play smooth jazz."
+                "The stress of moving isn't about finding A dentist. It's about finding YOUR dentist. You know, the one who won't judge your life choices while their hands are in your mouth."
               </p>
               <p className="mt-4 text-background/70">
-                — Someone who's been there
+                — Someone who's definitely been there
               </p>
             </div>
           </div>
@@ -33,10 +51,13 @@ export const Problem = () => {
             </p>
             
             <div className="grid md:grid-cols-2 gap-4">
-              {questions.map((question, index) => (
-                <div key={index} className="border border-border p-6 bg-card rounded-lg transition-all duration-300 hover:bg-accent hover:-translate-y-1 hover:shadow-lg cursor-default">
-                  <p className="font-sans text-lg">
-                    {question}
+              {questions.map((item, index) => (
+                <div key={index} className="border border-border p-6 bg-card rounded-lg transition-all duration-300 hover:bg-accent hover:-translate-y-1 hover:shadow-lg cursor-default flex flex-col">
+                  <p className="font-sans text-lg font-medium">
+                    {item.q}
+                  </p>
+                  <p className="font-sans text-sm text-muted-foreground mt-2">
+                    {item.sub}
                   </p>
                 </div>
               ))}
