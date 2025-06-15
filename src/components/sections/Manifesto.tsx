@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { Navigate, useNavigate } from "react-router-dom";
 import { FloatingIconsBackground } from "../FloatingIconsBackground";
 import { ThemeToggle } from "../ThemeToggle";
+import { AtoBGraphic } from "../AtoBGraphic";
 
 export const Manifesto = () => {
   const { session, loading } = useAuth();
@@ -50,6 +51,10 @@ export const Manifesto = () => {
             >
               Get Started →
             </Button>
+          </div>
+
+          <div className="pt-8">
+            <AtoBGraphic />
           </div>
         </div>
         
