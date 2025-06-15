@@ -200,13 +200,13 @@ const ExplorePage = () => {
                 <Carousel
                   opts={{
                     align: "start",
-                    loop: recs.length > 5,
+                    loop: recs.length > 3,
                   }}
                   className="w-full"
                 >
                   <CarouselContent className="-ml-4">
                     {recs.map((rec) => (
-                      <CarouselItem key={rec.place_id} className="pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                      <CarouselItem key={rec.place_id} className="pl-4 basis-full sm:basis-1/2 md:basis-1/3">
                         <div className="p-1 h-full">
                            <RecommendationCard 
                               recommendation={rec} 
