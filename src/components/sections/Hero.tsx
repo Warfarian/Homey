@@ -9,6 +9,10 @@ import { AtoBGraphic } from "../AtoBGraphic";
 export const Hero = () => {
   const [showAudioModal, setShowAudioModal] = useState(false);
 
+  const handleScrollToWaitlist = () => {
+    document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
       <div className="absolute top-4 right-4">
@@ -16,7 +20,7 @@ export const Hero = () => {
       </div>
       
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-sans text-6xl md:text-8xl font-black uppercase tracking-widest text-primary mb-2">Homey</h1>
+        <h1 className="font-sans text-6xl md:text-8xl font-bold uppercase tracking-widest text-primary mb-2">Homey</h1>
         <h2 className="font-serif text-3xl md:text-4xl text-foreground mb-8">
           Feel at home, faster.
         </h2>
@@ -29,6 +33,7 @@ export const Hero = () => {
           <Button 
             size="lg"
             className="group"
+            onClick={handleScrollToWaitlist}
           >
             Get Early Access
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

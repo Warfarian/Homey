@@ -33,7 +33,7 @@ export const Nest = () => {
           
           <div className="space-y-6">
             {nestItems.map((item, index) => (
-              <div key={index} className="bg-card p-6 rounded-xl border border-border transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+              <div key={index} className="bg-card p-6 rounded-lg border border-border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 <p className="font-sans text-sm text-muted-foreground mb-3">{item.vibe}</p>
                 <div className="flex items-center space-x-4">
                   <div className="flex-1 flex items-center space-x-2 text-foreground/70">

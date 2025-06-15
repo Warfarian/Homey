@@ -16,7 +16,7 @@ export const AtoBGraphic = () => {
           <line x1="0" y1="1" x2="100%" y2="1" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
         </svg>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-1 rounded-full">
-            <MoveRight className="w-6 h-6 md:w-8 md:h-8 text-primary animate-pulse" />
+            <MoveRight className="w-8 h-8 md:w-10 md:h-10 text-primary animate-pulse" />
         </div>
       </div>
 
