@@ -10,8 +10,9 @@ import { TakeoutUploadStep } from "@/components/onboarding/TakeoutUploadStep";
 import { PathChoiceStep } from "@/components/onboarding/PathChoiceStep";
 import { useToast } from "@/components/ui/use-toast";
 import { ChatFlow } from "@/components/onboarding/chat/ChatFlow";
+import { VoiceOnboardingStep } from "@/components/onboarding/VoiceOnboardingStep";
 
-type OnboardingStep = 'profile' | 'takeout_upload' | 'path_choice' | 'chat_flow';
+type OnboardingStep = 'profile' | 'takeout_upload' | 'path_choice' | 'chat_flow' | 'voice_flow';
 
 const Onboarding = () => {
   const { user } = useAuth();
@@ -90,11 +91,15 @@ const Onboarding = () => {
     if (path === 'chat') {
       setStep('chat_flow');
     } else {
-      toast({
-        title: "Coming Soon!",
-        description: "Voice onboarding will be available shortly.",
-      });
+      setStep('voice_flow');
     }
+  };
+
+  const handleVoiceOnboardingSuccess = () => {
+    console.log("Voice onboarding successful, checking for redirect...");
+    // The webhook handles setting onboarding_completed.
+    // Invalidate the profile query to refetch, which will trigger the redirect in useEffect.
+    queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
   };
 
   const handleLogout = async () => {
@@ -112,6 +117,8 @@ const Onboarding = () => {
         return <PathChoiceStep onPathSelect={handlePathChoice} />;
       case 'chat_flow':
         return <ChatFlow />;
+      case 'voice_flow':
+        return <VoiceOnboardingStep onSuccess={handleVoiceOnboardingSuccess} />;
       default:
         return null;
     }

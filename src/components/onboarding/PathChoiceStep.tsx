@@ -14,7 +14,7 @@ export const PathChoiceStep = ({ onPathSelect }: PathChoiceStepProps) => {
             <p className="text-xl text-muted-foreground mb-12">Now, how would you like to personalize your recommendations?</p>
 
             <div className="grid md:grid-cols-2 gap-8 text-left">
-                <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors" onClick={() => onPathSelect('voice')}>
+                <Card className="flex flex-col border-primary ring-2 ring-primary shadow-lg cursor-pointer" onClick={() => onPathSelect('voice')}>
                     <CardHeader>
                         <div className="flex items-center gap-4">
                             <div className="bg-primary/10 p-3 rounded-lg"><Mic className="w-8 h-8 text-primary" /></div>
@@ -23,13 +23,13 @@ export const PathChoiceStep = ({ onPathSelect }: PathChoiceStepProps) => {
                         <CardDescription className="pt-2">Have a natural conversation with our voice assistant.</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow flex items-end">
-                        <Button className="w-full" variant="outline" onClick={(e) => { e.stopPropagation(); onPathSelect('voice'); }}>
+                        <Button className="w-full" onClick={(e) => { e.stopPropagation(); onPathSelect('voice'); }}>
                             Start Talking <ArrowRight className="ml-2" />
                         </Button>
                     </CardContent>
                 </Card>
                 
-                <Card className="flex flex-col border-primary ring-2 ring-primary shadow-lg cursor-pointer" onClick={() => onPathSelect('chat')}>
+                <Card className="flex flex-col cursor-pointer hover:border-primary transition-colors" onClick={() => onPathSelect('chat')}>
                      <CardHeader>
                         <div className="flex items-center gap-4">
                             <div className="bg-primary/10 p-3 rounded-lg"><Bot className="w-8 h-8 text-primary" /></div>
@@ -38,7 +38,7 @@ export const PathChoiceStep = ({ onPathSelect }: PathChoiceStepProps) => {
                         <CardDescription className="pt-2">Answer a few questions in a friendly, conversational form.</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-grow flex items-end">
-                        <Button className="w-full" onClick={(e) => { e.stopPropagation(); onPathSelect('chat'); }}>
+                        <Button className="w-full" variant="outline" onClick={(e) => { e.stopPropagation(); onPathSelect('chat'); }}>
                             Start Chatting <ArrowRight className="ml-2" />
                         </Button>
                     </CardContent>
