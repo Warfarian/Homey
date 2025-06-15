@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -39,6 +40,7 @@ const Onboarding = () => {
   });
 
   const [step, setStep] = useState<OnboardingStep>('profile');
+  const [takeoutUploaded, setTakeoutUploaded] = useState(false);
 
   const isProfileComplete = !!(profile && profile.full_name && profile.age && profile.gender);
 
@@ -53,7 +55,11 @@ const Onboarding = () => {
         return;
       }
       if (isProfileComplete) {
-        setStep('takeout_upload');
+        if (takeoutUploaded) {
+          setStep('path_choice');
+        } else {
+          setStep('takeout_upload');
+        }
       } else {
         setStep('profile');
       }
@@ -61,7 +67,7 @@ const Onboarding = () => {
       // No profile exists, stay on the profile creation step
       setStep('profile');
     }
-  }, [isLoadingProfile, profile, navigate, isProfileComplete]);
+  }, [isLoadingProfile, profile, navigate, isProfileComplete, takeoutUploaded]);
 
   const handleProfileUpdateSuccess = () => {
     queryClient.invalidateQueries({ queryKey: ['profile', user?.id] });
@@ -69,7 +75,7 @@ const Onboarding = () => {
   };
 
   const handleTakeoutUploadSuccess = () => {
-    setStep('path_choice');
+    setTakeoutUploaded(true);
   };
 
   const handlePathChoice = (path: 'chat' | 'voice') => {
