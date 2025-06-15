@@ -40,8 +40,10 @@ serve(async (req) => {
       throw new Error(`Could not fetch onboarding data for user ${userId}: ${onboardingError?.message}`);
     }
 
+    const totalRecommendations = 15 * ALL_CATEGORIES.length;
     const prompt = `
       Based on the following user preferences, generate a list of 15 tailored place recommendations in San Francisco, CA for EACH of the following categories: ${ALL_CATEGORIES.join(', ')}.
+      This should result in a total of ${totalRecommendations} recommendations in the final JSON array.
       The user's preferences are:
       - Interests/Values: ${onboardingData.values?.join(', ') || 'Not specified'}
       - Preferred Categories: ${onboardingData.categories?.join(', ') || 'Not specified'}
@@ -86,7 +88,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'deepseek-ai/DeepSeek-V3',
         messages: [{ role: 'user', content: prompt }],
-        max_tokens: 4096,
+        max_tokens: 16384,
         temperature: 0.5,
         top_p: 0.95,
       }),
