@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -79,6 +80,8 @@
 
   body {
     @apply bg-background text-foreground font-sans transition-colors duration-300;
+    background-image: radial-gradient(hsla(var(--foreground), 0.05) 1px, transparent 0);
+    background-size: 20px 20px;
     cursor: var(--cursor-url) 12 12, auto;
   }
 

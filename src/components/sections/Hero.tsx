@@ -5,6 +5,7 @@ import { AudioModal } from "@/components/modals/AudioModal";
 import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "../ThemeToggle";
 import { AtoBGraphic } from "../AtoBGraphic";
+import { FloatingIconsBackground } from "../FloatingIconsBackground";
 
 export const Hero = () => {
   const [showAudioModal, setShowAudioModal] = useState(false);
@@ -15,6 +16,7 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center text-center overflow-hidden bg-background py-20 px-4">
+      <FloatingIconsBackground />
       <div className="absolute top-4 right-4">
         <ThemeToggle />
       </div>
