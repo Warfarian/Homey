@@ -3,9 +3,9 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { Problem } from "@/components/sections/Problem";
 import { Process } from "@/components/sections/Process";
 import { Nest } from "@/components/sections/Nest";
-import { TechStack } from "@/components/sections/TechStack";
 import { UserTestimonials } from "@/components/sections/UserTestimonials";
 import { LaunchCTA } from "@/components/sections/LaunchCTA";
+import { Stories } from "@/components/sections/Stories";
 
 const Index = () => {
   return (
@@ -14,7 +14,7 @@ const Index = () => {
       <Problem />
       <Process />
       <Nest />
-      <TechStack />
+      <Stories />
       <UserTestimonials />
       <LaunchCTA />
     </div>
