@@ -1,9 +1,5 @@
 
 project_id = "mrbwhxaichbpvlqlgzrq"
 
-[functions.nebius-chat-completion]
-# Using default settings, e.g., verify_jwt = true
-
 [functions.homey-chat-completion]
 verify_jwt = true
-
