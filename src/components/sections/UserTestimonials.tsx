@@ -9,14 +9,14 @@ export const UserTestimonials = () => {
   ];
 
   return (
-    <section className="py-24 px-8 bg-gray-50 border-t border-black">
+    <section className="py-24 px-8 bg-background border-t border-border">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-lg font-mono mb-16">[WHAT_USERS_SAY]</h2>
+        <h2 className="text-lg font-sans mb-16 text-muted-foreground">[WHAT_USERS_SAY]</h2>
         
         <div className="space-y-12">
           {testimonials.map((quote, index) => (
-            <blockquote key={index} className="border-l-2 border-black pl-6 transition-all duration-300 hover:border-l-4 hover:pl-8 cursor-pointer">
-              <p className="text-xl font-mono italic">
+            <blockquote key={index} className="border-l-4 border-primary pl-6 transition-all duration-300 hover:pl-8 cursor-pointer">
+              <p className="text-xl font-serif italic text-foreground/80">
                 "{quote}"
               </p>
             </blockquote>

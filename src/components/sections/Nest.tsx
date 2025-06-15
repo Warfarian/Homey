@@ -9,20 +9,20 @@ export const Nest = () => {
   ];
 
   return (
-    <section className="py-24 px-8 bg-gray-50">
+    <section className="py-24 px-8 bg-secondary">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-16">
           <div>
-            <h2 className="text-4xl font-black mb-8 font-sans">
+            <h2 className="text-4xl font-black mb-8 font-serif">
               WHAT'S IN A NEST?
             </h2>
-            <p className="text-lg font-mono mb-8 leading-relaxed">
+            <p className="text-lg font-sans mb-8 leading-relaxed">
               Think of it as a starter pack for your new life, filled with places that feel like they're already yours.
             </p>
             
-            <div className="bg-black text-white p-6">
-              <p className="font-mono text-sm mb-4">[HOW WE FIND YOUR SPOTS]</p>
-              <p className="font-mono text-sm">
+            <div className="bg-foreground text-background p-6 rounded-lg shadow-lg">
+              <p className="font-sans text-sm mb-4 font-bold">[HOW WE FIND YOUR SPOTS]</p>
+              <p className="font-sans text-sm text-background/80">
                 Homey listens to your story and understands what you loved about your old haunts—the vibe, the time of day you'd go, even the music. Then it finds the closest match in your new city.
               </p>
             </div>
@@ -30,11 +30,11 @@ export const Nest = () => {
           
           <div className="space-y-4">
             {nestItems.map((item, index) => (
-              <div key={index} className="border-2 border-black bg-white p-4 transition-all duration-300 hover:bg-gray-100 hover:-translate-y-1 hover:shadow-md cursor-default">
-                <div className="font-mono text-sm text-gray-500 mb-2">
+              <div key={index} className="border border-border bg-card p-4 rounded-lg transition-all duration-300 hover:bg-accent hover:-translate-y-1 hover:shadow-lg cursor-default">
+                <div className="font-sans text-sm text-muted-foreground mb-2">
                   {item.category}
                 </div>
-                <div className="font-mono text-sm">
+                <div className="font-sans text-sm">
                   {item.equivalent}
                 </div>
               </div>
@@ -43,11 +43,11 @@ export const Nest = () => {
         </div>
         
         <div className="mt-16 text-center">
-          <div className="inline-block bg-white border-2 border-black p-8">
-            <p className="font-mono text-lg">
+          <div className="inline-block bg-card border border-border p-8 rounded-lg shadow-md">
+            <p className="font-sans text-lg font-bold">
               YOUR NEST = A SENSE OF BELONGING
             </p>
-            <p className="font-mono text-sm text-gray-600 mt-2">
+            <p className="font-sans text-sm text-muted-foreground mt-2">
               Less searching, more living.
             </p>
           </div>

@@ -43,21 +43,23 @@ export const FormModal = ({ isOpen, onClose }: FormModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-      <div className="bg-white max-w-2xl w-full p-8 relative">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+      <div className="bg-background max-w-2xl w-full p-8 relative rounded-lg shadow-2xl">
         <Button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-transparent hover:bg-gray-100 text-black"
+          variant="ghost"
+          size="icon"
+          className="absolute top-4 right-4 rounded-full"
         >
           <X size={20} />
         </Button>
         
         <div className="space-y-8">
           <div>
-            <h2 className="text-3xl font-black mb-4 font-sans">
+            <h2 className="text-3xl font-black mb-4 font-serif">
               TELL US YOUR STORY
             </h2>
-            <p className="font-mono text-sm text-gray-600">
+            <p className="font-sans text-sm text-muted-foreground">
               Let's find the places that feel like home.
             </p>
           </div>
@@ -69,9 +71,9 @@ export const FormModal = ({ isOpen, onClose }: FormModalProps) => {
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-mono text-sm">Where did you move from?</FormLabel>
+                    <FormLabel className="font-sans text-sm">Where did you move from?</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., Portland" {...field} className="font-mono rounded-none border-2 border-black" />
+                      <Input placeholder="e.g., Portland" {...field} className="font-sans rounded-lg border-2 border-border focus-visible:ring-primary" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -82,11 +84,11 @@ export const FormModal = ({ isOpen, onClose }: FormModalProps) => {
                 name="misses"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="font-mono text-sm">What do you miss most? Be specific!</FormLabel>
+                    <FormLabel className="font-sans text-sm">What do you miss most? Be specific!</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="e.g., 'My quiet coffee shop on 23rd Ave with the big windows, where they played indie folk music...'"
-                        className="font-mono rounded-none border-2 border-black"
+                        className="font-sans rounded-lg border-2 border-border focus-visible:ring-primary"
                         rows={4}
                         {...field}
                       />
@@ -97,7 +99,7 @@ export const FormModal = ({ isOpen, onClose }: FormModalProps) => {
               />
               <Button
                 type="submit"
-                className="w-full bg-black text-white hover:bg-gray-800 font-mono tracking-wider py-3 rounded-none transition-transform duration-200 transform hover:scale-[1.03]"
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-sans tracking-wider py-3 rounded-lg transition-transform duration-200 transform hover:scale-[1.03]"
               >
                 FIND MY NEW SPOTS →
               </Button>

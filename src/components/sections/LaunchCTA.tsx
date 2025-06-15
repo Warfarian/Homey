@@ -24,13 +24,13 @@ export const LaunchCTA = () => {
   };
 
   return (
-    <section className="py-32 px-8 bg-black text-white">
+    <section className="py-32 px-8 bg-foreground text-background">
       <div className="max-w-4xl mx-auto text-center">
         <div className="mb-16">
-          <h2 className="text-6xl md:text-7xl font-black mb-8 font-sans tracking-tighter">
+          <h2 className="text-6xl md:text-7xl font-black mb-8 font-serif tracking-tighter">
             READY TO FEEL
           </h2>
-          <h2 className="text-6xl md:text-7xl font-black mb-12 font-sans tracking-tighter">
+          <h2 className="text-6xl md:text-7xl font-black mb-12 font-serif tracking-tighter">
             AT HOME?
           </h2>
         </div>
@@ -43,25 +43,25 @@ export const LaunchCTA = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 bg-transparent border-2 border-white text-white placeholder:text-gray-400 font-mono rounded-none focus:ring-0 focus:border-gray-300 transition-transform duration-200 focus:scale-[1.02]"
+              className="flex-1 bg-transparent border-2 border-background/50 text-background placeholder:text-background/60 font-sans rounded-lg focus:ring-primary focus:border-primary transition-colors"
             />
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-white text-black hover:bg-gray-200 font-mono tracking-wider px-8 rounded-none border-2 border-white transition-transform duration-200 transform hover:scale-105"
+              className="bg-background text-foreground hover:bg-background/90 font-sans tracking-wider px-8 rounded-lg transition-transform duration-200 transform hover:scale-105"
             >
               {isSubmitting ? "PROCESSING..." : "JOIN BETA →"}
             </Button>
           </div>
         </form>
         
-        <div className="bg-gray-900 p-8 font-mono text-sm">
-          <p className="mb-4">[PRIVACY_COMMITMENT]</p>
-          <p>
+        <div className="bg-background/10 p-8 font-sans text-sm rounded-lg">
+          <p className="mb-4 font-bold">[PRIVACY_COMMITMENT]</p>
+          <p className="text-background/80">
             Your data stays yours. Homey uses only what you consent to provide. 
             No tracking. No selling. No surveillance capitalism.
           </p>
-          <p className="mt-4 text-gray-400">
+          <p className="mt-4 text-background/60">
             Questions? Email us at research@homey.ai
           </p>
         </div>

@@ -9,7 +9,7 @@ import { LaunchCTA } from "@/components/sections/LaunchCTA";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white text-black font-mono">
+    <div className="min-h-screen">
       <Manifesto />
       <Problem />
       <Process />
