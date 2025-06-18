@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/integrations/supabase/client';
+import localApi from '@/integrations/local-api/client';
 import { Loader2, PhoneOutgoing, Play } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -40,12 +40,7 @@ export const VoiceOnboardingStep = ({ onSuccess }: VoiceOnboardingStepProps) => 
     setIsLoading(true);
     setError(null);
     try {
-      const { error: funcError } = await supabase.functions.invoke('create-retell-call', {
-          body: { to_number: phoneNumber }
-      });
-
-      if (funcError) throw funcError;
-
+      await localApi.createRetellCall(phoneNumber);
       setIsCalling(true);
     } catch (err: any) {
       console.error('Failed to start call:', err);

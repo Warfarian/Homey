@@ -1,6 +1,5 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { Recommendation } from "@/components/RecommendationCard";
@@ -17,29 +16,25 @@ export const useSavedPlaces = () => {
         queryKey: ['saved_places', user?.id],
         queryFn: async () => {
             if (!user) return [];
-            const { data, error } = await supabase
-                .from('saved_places')
-                .select('place_id')
-                .eq('user_id', user.id);
-            if (error) {
+            try {
+                return await localApi.getSavedPlaces();
+            } catch (error) {
                 console.error("Error fetching saved places", error);
                 return [];
             }
-            return data;
         },
         enabled: !!user,
     });
 
     const savedPlaceIds = useMemo(() => {
-        return new Set(savedPlaces?.map((p) => p.place_id));
+        return new Set(savedPlaces?.map((p: any) => p.place_id));
     }, [savedPlaces]);
 
     const savePlaceMutation = useMutation({
         mutationFn: async (recommendation: Recommendation) => {
             if (!user) throw new Error("User not authenticated");
 
-            const { data, error } = await supabase.from("saved_places").insert({
-                user_id: user.id,
+            return await localApi.savePlace({
                 place_id: recommendation.place_id,
                 name: recommendation.name,
                 location: recommendation.location,
@@ -47,10 +42,7 @@ export const useSavedPlaces = () => {
                 match_score: recommendation.match_score,
                 match_reason: recommendation.match_reason,
                 google_maps_link: recommendation.google_maps_link,
-            }).select();
-
-            if (error) throw new Error(error.message);
-            return data;
+            });
         },
         onSuccess: (_data, variables) => {
             toast({

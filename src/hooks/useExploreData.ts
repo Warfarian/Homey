@@ -1,6 +1,5 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -14,37 +13,26 @@ export const useExploreData = () => {
     queryFn: async () => {
       if (!user) return null;
       
-      const { data, error } = await supabase
-        .from('explore_recommendations')
-        .select('recommendations, updated_at')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      try {
+        const data = await localApi.getRecommendations();
+        
+        // If no recommendations or stale, generate new ones
+        if (!data.recommendations || data.stale) {
+          console.log("Generating new recommendations...");
+          const generatedData = await localApi.generateRecommendations();
+          return generatedData;
+        }
 
-      if (error) {
+        return data;
+      } catch (error: any) {
         console.error("Error fetching recommendations", error);
+        toast({
+          title: "Could not fetch recommendations",
+          description: "There was an issue loading your recommendations. Please try again later.",
+          variant: "destructive",
+        });
         throw new Error(error.message);
       }
-      
-      const oneDay = 24 * 60 * 60 * 1000;
-      if (!data || !data.recommendations || (new Date().getTime() - new Date(data.updated_at).getTime()) > oneDay) {
-        console.log("Generating new recommendations...");
-        const { data: generatedData, error: generationError } = await supabase.functions.invoke('generate-recommendations', {
-          body: { userId: user.id },
-        });
-        
-        if (generationError) {
-          console.error("Error generating recommendations", generationError);
-          toast({
-            title: "Could not generate recommendations",
-            description: "There was an issue creating your personalized recommendations. Please try again later.",
-            variant: "destructive",
-          });
-          throw new Error(generationError.message);
-        }
-        return generatedData;
-      }
-
-      return data;
     },
     enabled: !!user,
   });
@@ -52,11 +40,7 @@ export const useExploreData = () => {
   const generateNewRecommendationsMutation = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error("User not authenticated");
-      const { data, error } = await supabase.functions.invoke('generate-recommendations', {
-        body: { userId: user.id },
-      });
-      if (error) throw new Error(error.message);
-      return data;
+      return await localApi.generateRecommendations();
     },
     onSuccess: () => {
       toast({ title: "New Recommendations Generated!", description: "We've refreshed your recommendations." });

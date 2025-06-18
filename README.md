@@ -1,38 +1,30 @@
-# Welcome to your Lovable project
+# Homey - Your Friend in a New Town
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/352ddfb0-0bd4-4780-944c-c8af8bd9719f
+Homey is a personal AI companion that helps you feel at home faster when moving to a new city.
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/352ddfb0-0bd4-4780-944c-c8af8bd9719f) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Clone this repo and push changes. 
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 Follow these steps:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Step 1: Clone the repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Step 2: Navigate to the project directory
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
+# Step 3: Install the necessary dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
@@ -59,15 +51,9 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Local API backend
+- Retell AI for voice interactions
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/352ddfb0-0bd4-4780-944c-c8af8bd9719f) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Build the project with `npm run build` and deploy the `dist` folder to your preferred hosting service.

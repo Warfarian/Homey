@@ -1,6 +1,5 @@
-
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, Bookmark } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,17 +14,12 @@ const DashboardPage = () => {
         queryKey: ['saved_places', user?.id],
         queryFn: async () => {
             if (!user) return [];
-            const { data, error } = await supabase
-                .from('saved_places')
-                .select('*')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: false });
-
-            if (error) {
+            try {
+                return await localApi.getSavedPlaces();
+            } catch (error) {
                 console.error("Error fetching saved places", error);
-                throw new Error(error.message);
+                throw new Error('Failed to fetch saved places');
             }
-            return data;
         },
         enabled: !!user,
     });

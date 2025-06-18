@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,6 +34,7 @@ const AuthForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { signIn, signUp } = useAuth();
 
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -47,10 +48,7 @@ const AuthForm = () => {
 
   const handleLogin = async (values: z.infer<typeof loginSchema>) => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({
-      email: values.email,
-      password: values.password,
-    });
+    const { error } = await signIn(values.email, values.password);
     if (error) {
       toast({ title: "Login Error", description: error.message, variant: "destructive" });
     } else {
@@ -62,17 +60,12 @@ const AuthForm = () => {
 
   const handleSignup = async (values: z.infer<typeof signupSchema>) => {
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email: values.email,
-      password: values.password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/onboarding`,
-      },
-    });
+    const { error } = await signUp(values.email, values.password);
     if (error) {
       toast({ title: "Signup Error", description: error.message, variant: "destructive" });
     } else {
-      toast({ title: "Check your email!", description: "A confirmation link has been sent to you." });
+      toast({ title: "Account created!", description: "You can now start onboarding." });
+      navigate("/onboarding");
     }
     setLoading(false);
   };

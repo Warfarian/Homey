@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
@@ -15,7 +15,7 @@ import { VoiceOnboardingStep } from "@/components/onboarding/VoiceOnboardingStep
 type OnboardingStep = 'profile' | 'takeout_upload' | 'path_choice' | 'chat_flow' | 'voice_flow';
 
 const Onboarding = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { toast } = useToast();
@@ -24,17 +24,13 @@ const Onboarding = () => {
     queryKey: ['profile', user?.id],
     queryFn: async () => {
       if (!user) return null;
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-      
-      if (error && error.code !== 'PGRST116') {
+      try {
+        const data = await localApi.getProfile();
+        return data;
+      } catch (error) {
         console.error("Error fetching profile", error);
-        throw new Error(error.message);
+        throw error;
       }
-      return data;
     },
     enabled: !!user,
   });
@@ -103,7 +99,7 @@ const Onboarding = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    signOut();
     navigate('/');
   };
 

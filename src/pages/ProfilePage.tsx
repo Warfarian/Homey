@@ -1,6 +1,5 @@
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, User, Edit } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -18,17 +17,13 @@ const ProfilePage = () => {
         queryKey: ['profile', user?.id],
         queryFn: async () => {
             if (!user) return null;
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('full_name, age, gender')
-                .eq('id', user.id)
-                .maybeSingle();
-
-            if (error) {
+            try {
+                const data = await localApi.getProfile();
+                return data;
+            } catch (error) {
                 console.error("Error fetching profile", error);
-                throw new Error(error.message);
+                throw error;
             }
-            return data;
         },
         enabled: !!user,
     });

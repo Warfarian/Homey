@@ -1,4 +1,3 @@
-
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -20,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
@@ -29,6 +28,7 @@ const profileSchema = z.object({
   full_name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   age: z.coerce.number().min(1, { message: "Please enter a valid age." }).max(120, { message: "Please enter a valid age." }),
   gender: z.string().min(1, { message: "Please select a gender." }),
+  destination_city: z.string().min(2, { message: "Please enter your destination city." }),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
@@ -58,6 +58,7 @@ export const ProfileForm = ({
       full_name: initialData.full_name || "",
       age: initialData.age,
       gender: initialData.gender || "",
+      destination_city: initialData.destination_city || "",
     },
   });
 
@@ -69,23 +70,20 @@ export const ProfileForm = ({
 
     setIsSubmitting(true);
 
-    const { error } = await supabase
-      .from("profiles")
-      .update({
+    try {
+      await localApi.updateProfile({
         full_name: values.full_name,
         age: values.age,
         gender: values.gender,
-        updated_at: new Date().toISOString(),
-      })
-      .eq("id", user.id);
-
-    setIsSubmitting(false);
-
-    if (error) {
-      toast({ title: "Error updating profile", description: error.message, variant: "destructive" });
-    } else {
+        destination_city: values.destination_city,
+      });
+      
       toast({ title: "Profile updated!", description: "Your information has been saved." });
       onSuccess();
+    } catch (error: any) {
+      toast({ title: "Error updating profile", description: error.message, variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -144,6 +142,19 @@ export const ProfileForm = ({
                       <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="destination_city"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>What city are you moving to?</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., Austin, TX or London, UK" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

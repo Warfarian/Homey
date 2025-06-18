@@ -5,7 +5,7 @@ import { FloatingIconsBackground } from "../FloatingIconsBackground";
 import { ThemeToggle } from "../ThemeToggle";
 import { AtoBGraphic } from "../AtoBGraphic";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { Loader2, ShoppingCart, HeartPulse, Dumbbell, Palette, GlassWater, Utensils, Trees, Coffee, Briefcase, Church } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
@@ -27,17 +27,13 @@ const Dashboard = ({ profile }: { profile: { full_name: string, id: string } }) 
     const { data: onboardingData, isLoading } = useQuery({
         queryKey: ['onboarding_responses', profile.id],
         queryFn: async () => {
-            const { data, error } = await supabase
-                .from('onboarding_responses')
-                .select('categories')
-                .eq('user_id', profile.id)
-                .single();
-
-            if (error) {
+            try {
+                const data = await localApi.getOnboarding();
+                return data;
+            } catch (error) {
                 console.error("Error fetching onboarding responses", error);
                 return { categories: [] };
             }
-            return data;
         },
         enabled: !!profile.id,
     });
@@ -94,20 +90,16 @@ export const Manifesto = () => {
     queryKey: ['profile', user?.id],
     queryFn: async () => {
         if (!user) return null;
-        const { data, error } = await supabase
-            .from('profiles')
-            .select('id, full_name, onboarding_completed')
-            .eq('id', user.id)
-            .single();
-        if (error && error.code !== 'PGRST116') {
+        try {
+            const data = await localApi.getProfile();
+            return data;
+        } catch (error) {
             console.error("Error fetching profile", error);
-            throw new Error(error.message);
+            throw error;
         }
-        return data;
     },
     enabled: !!user,
   });
-
 
   const handleGetStarted = () => {
     navigate('/auth');

@@ -1,6 +1,5 @@
-
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
+import localApi from "@/integrations/local-api/client";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,30 +15,26 @@ import { useQuery } from "@tanstack/react-query";
 import { LogOut, User } from "lucide-react";
 
 const Header = () => {
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const navigate = useNavigate();
     
     const { data: profile } = useQuery({
         queryKey: ['profile', user?.id, 'header'],
         queryFn: async () => {
             if (!user) return null;
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('full_name')
-                .eq('id', user.id)
-                .maybeSingle();
-
-            if (error) {
+            try {
+                const data = await localApi.getProfile();
+                return data;
+            } catch (error) {
                 console.error("Error fetching profile for header", error);
                 return null;
             }
-            return data;
         },
         enabled: !!user,
     });
 
     const handleLogout = async () => {
-        await supabase.auth.signOut();
+        signOut();
         navigate('/');
     };
     
