@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Bookmark, Star, MapPin, ExternalLink } from "lucide-react";
@@ -24,21 +23,17 @@ export const RecommendationCard = ({ recommendation, onSave, isSaving }: Recomme
     <Card className="flex flex-col h-full">
       <CardHeader>
         <CardTitle>{recommendation.name}</CardTitle>
-        <CardDescription className="flex items-start gap-2 pt-1">
-            <MapPin className="mt-1 h-4 w-4 flex-shrink-0" />
-            <span>{recommendation.location}</span>
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+        <CardDescription className="flex items-center gap-2 pt-1">
             <span className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground">
                 {recommendation.category}
             </span>
             <span className="flex items-center gap-1">
                 <Star className="text-amber-400 fill-amber-400 h-4 w-4" /> {recommendation.match_score}% Match
             </span>
-        </div>
-        <p className="mt-4 text-sm">{recommendation.match_reason}</p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex-grow">
+        <p className="text-sm">{recommendation.match_reason}</p>
       </CardContent>
       <CardFooter className="flex-col sm:flex-row items-stretch sm:items-center gap-2">
         <Button onClick={() => onSave(recommendation)} className="w-full sm:w-auto flex-grow" disabled={isSaving}>

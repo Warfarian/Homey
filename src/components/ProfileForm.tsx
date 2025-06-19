@@ -56,7 +56,7 @@ export const ProfileForm = ({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       full_name: initialData.full_name || "",
-      age: initialData.age,
+      age: initialData.age || "",
       gender: initialData.gender || "",
       destination_city: initialData.destination_city || "",
     },
@@ -116,7 +116,12 @@ export const ProfileForm = ({
                 <FormItem>
                   <FormLabel>Age</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="e.g., 30" {...field} onChange={event => field.onChange(+event.target.value)} />
+                    <Input 
+                      type="number" 
+                      placeholder="e.g., 30" 
+                      {...field} 
+                      onChange={event => field.onChange(event.target.value ? +event.target.value : "")} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
