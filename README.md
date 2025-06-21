@@ -2,6 +2,10 @@
 
 Homey is a personal AI companion that helps you feel at home faster when moving to a new city. Using intelligent recommendations and voice interactions, Homey learns your preferences via google takeout and connects you to the people and places that make a new city feel like your city.
 
+[Vote Here](https://devpost.com/software/homey-g0exml)
+
+[Demo](https://youtu.be/Ig3DJkx01WE?si=PiwMmGttEvGXbp3a)
+
 ## ✨ Features
 
 ### 🎯 Personalized Onboarding
